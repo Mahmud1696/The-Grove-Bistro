@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MenuProvider } from './context/MenuContext';
 import { CartProvider } from './context/CartContext';
 import { OrderProvider } from './context/OrderContext';
 import { ReservationProvider } from './context/ReservationContext';
@@ -72,10 +73,11 @@ export default function App() {
   };
 
   return (
-    <CartProvider>
-      <OrderProvider>
-        <ReservationProvider>
-          <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1A1E1B] selection:bg-[#2D4532] selection:text-white">
+    <MenuProvider>
+      <CartProvider>
+        <OrderProvider>
+          <ReservationProvider>
+            <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1A1E1B] selection:bg-[#2D4532] selection:text-white">
             {/* Main Sticky Header */}
             <Header currentView={currentView} onNavigate={navigateTo} />
 
@@ -148,5 +150,6 @@ export default function App() {
         </ReservationProvider>
       </OrderProvider>
     </CartProvider>
-  );
+  </MenuProvider>
+);
 }

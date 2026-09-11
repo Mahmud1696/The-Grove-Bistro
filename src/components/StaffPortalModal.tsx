@@ -1,20 +1,66 @@
-import { useState } from 'react';
-import { X, ShoppingBag, Calendar, CheckCircle2, Clock, Truck, ChefHat, Bell, Search, RefreshCw } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { 
+  X, 
+  LayoutDashboard, 
+  ShoppingBag, 
+  UtensilsCrossed, 
+  TrendingUp, 
+  Calendar, 
+  ChefHat, 
+  Bell, 
+  Plus, 
+  ArrowLeft,
+  Clock,
+  Sparkles,
+  ExternalLink
+} from 'lucide-react';
 import { useOrder } from '../context/OrderContext';
+import { useMenu } from '../context/MenuContext';
 import { useReservation } from '../context/ReservationContext';
-import { OrderStatus } from '../types';
+import { OrderStatus, MenuItem } from '../types';
+
+import { AdminDashboardTab } from './admin/AdminDashboardTab';
+import { AdminOrdersTab } from './admin/AdminOrdersTab';
+import { AdminDishesTab } from './admin/AdminDishesTab';
+import { AdminAnalyticsTab } from './admin/AdminAnalyticsTab';
+import { AdminReservationsTab } from './admin/AdminReservationsTab';
+import { AddDishModal } from './admin/AddDishModal';
 
 interface StaffPortalModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type AdminTab = 'dashboard' | 'orders' | 'dishes' | 'analytics' | 'reservations';
+
 export function StaffPortalModal({ isOpen, onClose }: StaffPortalModalProps) {
   const { orders, updateOrderStatus } = useOrder();
+  const { menuItems, addMenuItem, toggleDishAvailability, deleteMenuItem, resetMenuToDefault } = useMenu();
   const { reservations, cancelReservation } = useReservation();
-  const [activeTab, setActiveTab] = useState<'orders' | 'reservations'>('orders');
-  const [searchQuery, setSearchQuery] = useState('');
+
+  const [activeTab, setActiveTab] = useState<AdminTab>('dashboard');
+  const [isAddDishModalOpen, setIsAddDishModalOpen] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>('');
+
+  // Live Dhaka digital clock
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Dhaka',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        })
+      );
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (!isOpen) return null;
 
@@ -23,267 +69,266 @@ export function StaffPortalModal({ isOpen, onClose }: StaffPortalModalProps) {
     setTimeout(() => setNotificationMsg(null), 3500);
   };
 
-  const filteredOrders = orders.filter(
-    o =>
-      o.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      o.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      o.phone.includes(searchQuery)
-  );
+  const handleAddDish = (dishData: Omit<MenuItem, 'id'>) => {
+    const created = addMenuItem(dishData);
+    triggerNotification(`Dish "${created.name}" published! It is now live on the customer website.`);
+  };
 
-  const statuses: OrderStatus[] = [
-    'Pending',
-    'Confirmed',
-    'Preparing',
-    'Ready',
-    'Out for delivery',
-    'Completed',
-    'Cancelled'
-  ];
+  const activeOrdersCount = orders.filter(
+    o => ['Pending', 'Confirmed', 'Preparing'].includes(o.orderStatus)
+  ).length;
 
   return (
     <div
-      id="staff-portal-modal"
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+      id="staff-portal-fullscreen"
+      className="fixed inset-0 z-50 bg-[#101511] text-[#FAF8F5] flex flex-col overflow-hidden select-none"
       role="dialog"
       aria-modal="true"
-      aria-label="Staff & Kitchen Management Portal"
+      aria-label="The Grove Bistro Executive Management Portal"
     >
-      <div className="bg-[#FAF8F5] text-[#1E221E] w-full max-w-5xl rounded-sm shadow-2xl border border-[#E3DDD4] overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header */}
-        <div className="bg-[#18211A] text-white p-5 sm:p-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#2D4532] flex items-center justify-center text-[#A3B899]">
-              <ChefHat className="w-5 h-5" />
+      {/* Top Navigation Bar */}
+      <header className="bg-[#141A15] border-b border-[#243327] px-4 sm:px-6 py-3 flex items-center justify-between gap-4 shrink-0">
+        {/* Left: Branding & Status */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-sm bg-[#2D4532] flex items-center justify-center text-[#A3B899] shadow-inner">
+            <ChefHat className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="font-serif-display text-base sm:text-lg font-bold tracking-tight text-white">
+                THE GROVE BISTRO
+              </h2>
+              <span className="hidden sm:inline-block text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full bg-[#2D4532] text-[#A3B899] font-semibold border border-[#3E5C44]">
+                Executive Console
+              </span>
             </div>
-            <div>
-              <h3 className="font-serif-display text-lg sm:text-xl font-semibold">
-                The Grove Bistro — Operational Console
-              </h3>
-              <p className="text-xs text-[#A3B899]">
-                Live Orders & Reservations Dispatch • Hamid Tower, Gulshan 2
-              </p>
+            <div className="flex items-center gap-2 text-xs text-[#828F84]">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[#C8D1CA]">Hamid Tower, Gulshan 2</span>
+              </span>
+              <span className="hidden md:inline">•</span>
+              <span className="hidden md:flex items-center gap-1 text-[#A3B899]">
+                <Clock className="w-3 h-3" />
+                <span>Dhaka Time: {currentTime || 'Live'}</span>
+              </span>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
 
-        {/* Notification Banner */}
-        {notificationMsg && (
-          <div className="bg-[#2D4532] text-white text-xs px-6 py-2.5 flex items-center gap-2 animate-fadeIn">
-            <Bell className="w-4 h-4 text-amber-300" />
-            <span>{notificationMsg}</span>
-          </div>
+        {/* Center: Navigation Tabs (Desktop) */}
+        <nav className="hidden lg:flex items-center gap-1 bg-[#101511] p-1 rounded-sm border border-[#243327]">
+          <button
+            onClick={() => setActiveTab('dashboard')}
+            className={`px-3.5 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'dashboard'
+                ? 'bg-[#2D4532] text-white shadow-xs'
+                : 'text-[#828F84] hover:text-white hover:bg-[#18211A]'
+            }`}
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" />
+            <span>Dashboard</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('orders')}
+            className={`px-3.5 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'orders'
+                ? 'bg-[#2D4532] text-white shadow-xs'
+                : 'text-[#828F84] hover:text-white hover:bg-[#18211A]'
+            }`}
+          >
+            <ShoppingBag className="w-3.5 h-3.5" />
+            <span>Orders</span>
+            {activeOrdersCount > 0 && (
+              <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-black text-[10px] font-bold">
+                {activeOrdersCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setActiveTab('dishes')}
+            className={`px-3.5 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'dishes'
+                ? 'bg-[#2D4532] text-white shadow-xs'
+                : 'text-[#828F84] hover:text-white hover:bg-[#18211A]'
+            }`}
+          >
+            <UtensilsCrossed className="w-3.5 h-3.5" />
+            <span>Dishes</span>
+            <span className="text-[10px] text-[#828F84]">({menuItems.length})</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`px-3.5 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'analytics'
+                ? 'bg-[#2D4532] text-white shadow-xs'
+                : 'text-[#828F84] hover:text-white hover:bg-[#18211A]'
+            }`}
+          >
+            <TrendingUp className="w-3.5 h-3.5" />
+            <span>Analytics</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('reservations')}
+            className={`px-3.5 py-1.5 rounded-xs text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              activeTab === 'reservations'
+                ? 'bg-[#2D4532] text-white shadow-xs'
+                : 'text-[#828F84] hover:text-white hover:bg-[#18211A]'
+            }`}
+          >
+            <Calendar className="w-3.5 h-3.5" />
+            <span>Bookings</span>
+            <span className="text-[10px] text-[#828F84]">({reservations.length})</span>
+          </button>
+        </nav>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setIsAddDishModalOpen(true)}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#2D4532] hover:bg-[#39573f] text-white text-xs font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Add Dish</span>
+          </button>
+
+          <button
+            onClick={onClose}
+            className="px-3 py-1.5 bg-[#18211A] hover:bg-[#243327] border border-[#2D3F30] text-[#C8D1CA] hover:text-white text-xs font-semibold uppercase tracking-wider rounded-xs transition-colors cursor-pointer flex items-center gap-1.5"
+            title="Return to Public Website"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Exit to Website</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Tab Navigation */}
+      <div className="lg:hidden bg-[#141A15] border-b border-[#243327] px-4 py-2 flex items-center gap-1 overflow-x-auto scrollbar-none shrink-0">
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`px-3 py-1.5 rounded-xs text-xs font-medium uppercase tracking-wider shrink-0 cursor-pointer ${
+            activeTab === 'dashboard' ? 'bg-[#2D4532] text-white' : 'text-[#828F84]'
+          }`}
+        >
+          Dashboard
+        </button>
+        <button
+          onClick={() => setActiveTab('orders')}
+          className={`px-3 py-1.5 rounded-xs text-xs font-medium uppercase tracking-wider shrink-0 cursor-pointer flex items-center gap-1.5 ${
+            activeTab === 'orders' ? 'bg-[#2D4532] text-white' : 'text-[#828F84]'
+          }`}
+        >
+          <span>Orders</span>
+          {activeOrdersCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-black text-[10px] font-bold">
+              {activeOrdersCount}
+            </span>
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab('dishes')}
+          className={`px-3 py-1.5 rounded-xs text-xs font-medium uppercase tracking-wider shrink-0 cursor-pointer ${
+            activeTab === 'dishes' ? 'bg-[#2D4532] text-white' : 'text-[#828F84]'
+          }`}
+        >
+          Dishes ({menuItems.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('analytics')}
+          className={`px-3 py-1.5 rounded-xs text-xs font-medium uppercase tracking-wider shrink-0 cursor-pointer ${
+            activeTab === 'analytics' ? 'bg-[#2D4532] text-white' : 'text-[#828F84]'
+          }`}
+        >
+          Analytics
+        </button>
+        <button
+          onClick={() => setActiveTab('reservations')}
+          className={`px-3 py-1.5 rounded-xs text-xs font-medium uppercase tracking-wider shrink-0 cursor-pointer ${
+            activeTab === 'reservations' ? 'bg-[#2D4532] text-white' : 'text-[#828F84]'
+          }`}
+        >
+          Bookings ({reservations.length})
+        </button>
+      </div>
+
+      {/* Notification Toast */}
+      {notificationMsg && (
+        <div className="bg-[#2D4532] text-white text-xs px-6 py-2.5 flex items-center gap-2 border-b border-[#3E5C44] animate-fadeIn shrink-0">
+          <Bell className="w-4 h-4 text-amber-300" />
+          <span className="font-medium">{notificationMsg}</span>
+        </div>
+      )}
+
+      {/* Scrollable Main Content View */}
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        {activeTab === 'dashboard' && (
+          <AdminDashboardTab
+            orders={orders}
+            menuItems={menuItems}
+            onNavigateTab={setActiveTab}
+            onOpenAddDish={() => setIsAddDishModalOpen(true)}
+            onUpdateOrderStatus={updateOrderStatus}
+          />
         )}
 
-        {/* Sub-Header Tabs & Search */}
-        <div className="p-4 bg-[#F5F1EB] border-b border-[#E6E0D6] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <button
-              onClick={() => setActiveTab('orders')}
-              className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xs transition-colors cursor-pointer flex items-center gap-2 ${
-                activeTab === 'orders'
-                  ? 'bg-[#2D4532] text-white shadow-xs'
-                  : 'bg-[#FAF8F5] text-[#1E221E] hover:bg-[#EFEAE2]'
-              }`}
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Incoming Orders ({orders.length})</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('reservations')}
-              className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold rounded-xs transition-colors cursor-pointer flex items-center gap-2 ${
-                activeTab === 'reservations'
-                  ? 'bg-[#2D4532] text-white shadow-xs'
-                  : 'bg-[#FAF8F5] text-[#1E221E] hover:bg-[#EFEAE2]'
-              }`}
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Table Bookings ({reservations.length})</span>
-            </button>
-          </div>
+        {activeTab === 'orders' && (
+          <AdminOrdersTab
+            orders={orders}
+            onUpdateOrderStatus={updateOrderStatus}
+            onNotification={triggerNotification}
+          />
+        )}
 
-          <div className="relative w-full sm:w-64">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#828B83]" />
-            <input
-              type="text"
-              placeholder="Search by ID, name, phone..."
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#FAF8F5] border border-[#DDD6CB] rounded-xs focus:outline-none focus:border-[#2D4532]"
-            />
-          </div>
+        {activeTab === 'dishes' && (
+          <AdminDishesTab
+            menuItems={menuItems}
+            onOpenAddDish={() => setIsAddDishModalOpen(true)}
+            onToggleAvailability={toggleDishAvailability}
+            onDeleteDish={deleteMenuItem}
+            onResetDefaultMenu={resetMenuToDefault}
+            onNotification={triggerNotification}
+          />
+        )}
+
+        {activeTab === 'analytics' && (
+          <AdminAnalyticsTab
+            orders={orders}
+            menuItems={menuItems}
+          />
+        )}
+
+        {activeTab === 'reservations' && (
+          <AdminReservationsTab
+            reservations={reservations}
+            onCancelReservation={cancelReservation}
+            onNotification={triggerNotification}
+          />
+        )}
+      </main>
+
+      {/* Footer status bar */}
+      <footer className="bg-[#141A15] border-t border-[#243327] px-6 py-2.5 flex items-center justify-between text-xs text-[#828F84] shrink-0">
+        <div className="flex items-center gap-3">
+          <span>The Grove Bistro Operations</span>
+          <span>•</span>
+          <span className="text-emerald-400">Database Synchronized Locally</span>
         </div>
-
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-          {activeTab === 'orders' ? (
-            <div className="space-y-4">
-              {filteredOrders.length === 0 ? (
-                <div className="text-center py-12 text-[#7F8881] text-sm">
-                  No orders match current search filter.
-                </div>
-              ) : (
-                filteredOrders.map(order => (
-                  <div
-                    key={order.orderId}
-                    className="p-5 bg-white border border-[#E3DDD4] rounded-xs shadow-xs space-y-4"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0EBE3] gap-2">
-                      <div className="flex items-center gap-3">
-                        <span className="font-serif-display font-bold text-base text-[#1A1E1B]">
-                          {order.orderId}
-                        </span>
-                        <span className="text-xs uppercase px-2.5 py-0.5 rounded-full bg-[#EFEAE2] font-semibold text-[#2D4532]">
-                          {order.orderType}
-                        </span>
-                        <span className="text-xs text-[#7F8881]">
-                          {new Date(order.createdAt).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </span>
-                      </div>
-
-                      {/* Status Selector */}
-                      <div className="flex items-center gap-2">
-                        <label className="text-xs text-[#6F7770]">Status:</label>
-                        <select
-                          value={order.orderStatus}
-                          onChange={e => {
-                            const newStatus = e.target.value as OrderStatus;
-                            updateOrderStatus(order.orderId, newStatus);
-                            triggerNotification(
-                              `Order ${order.orderId} updated to ${newStatus}. Customer status synchronized.`
-                            );
-                          }}
-                          className="text-xs font-semibold py-1 px-2.5 bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] cursor-pointer"
-                        >
-                          {statuses.map(st => (
-                            <option key={st} value={st}>
-                              {st}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs text-[#525953]">
-                      <div>
-                        <p className="font-semibold text-[#1A1E1B]">Customer</p>
-                        <p>{order.customerName}</p>
-                        <p>{order.phone}</p>
-                        {order.email && <p className="text-[#7F8881]">{order.email}</p>}
-                      </div>
-
-                      <div>
-                        <p className="font-semibold text-[#1A1E1B]">Destination / Details</p>
-                        {order.orderType === 'delivery' && (
-                          <>
-                            <p>{order.address}</p>
-                            <p className="text-[#2D4532] font-medium">{order.area}</p>
-                          </>
-                        )}
-                        {order.orderType === 'pickup' && (
-                          <p>Pickup Time: {order.pickupTime || 'Within 25 mins'}</p>
-                        )}
-                        {order.orderType === 'dine-in' && (
-                          <p>Table Ref: {order.tableReference || 'Counter Assigned'}</p>
-                        )}
-                        {order.specialInstructions && (
-                          <p className="italic text-amber-800 mt-1">"{order.specialInstructions}"</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <p className="font-semibold text-[#1A1E1B]">Items & Total</p>
-                        <ul className="space-y-0.5">
-                          {order.items.map((it, i) => (
-                            <li key={i}>
-                              {it.quantity}x {it.item.name}
-                            </li>
-                          ))}
-                        </ul>
-                        <p className="font-bold text-sm text-[#1A1E1B] mt-1 pt-1 border-t border-[#F0EBE3]">
-                          Total: ৳ {order.total.toLocaleString()} ({order.paymentMethod.replace(/_/g, ' ')})
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          ) : (
-            /* Reservations Tab */
-            <div className="space-y-4">
-              {reservations.length === 0 ? (
-                <div className="text-center py-12 text-[#7F8881] text-sm">
-                  No reservations currently on record.
-                </div>
-              ) : (
-                reservations.map(res => (
-                  <div
-                    key={res.id}
-                    className="p-5 bg-white border border-[#E3DDD4] rounded-xs shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-3">
-                        <span className="font-serif-display font-bold text-base text-[#1A1E1B]">
-                          {res.referenceNumber}
-                        </span>
-                        <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
-                          {res.status}
-                        </span>
-                        <span className="text-xs text-[#7F8881]">
-                          Date: {res.date} • {res.time}
-                        </span>
-                      </div>
-                      <p className="text-sm font-medium text-[#1A1E1B]">
-                        {res.name} — {res.guests} Guests ({res.occasion})
-                      </p>
-                      <p className="text-xs text-[#6F7770]">
-                        Phone: {res.phone} • Email: {res.email}
-                      </p>
-                      {res.specialRequest && (
-                        <p className="text-xs italic text-stone-600">
-                          Special request: "{res.specialRequest}"
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => {
-                          cancelReservation(res.id);
-                          triggerNotification(`Reservation ${res.referenceNumber} cancelled.`);
-                        }}
-                        className="px-3 py-1.5 text-xs text-red-700 hover:bg-red-50 border border-red-200 rounded-xs transition-colors cursor-pointer"
-                      >
-                        Cancel Booking
-                      </button>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
+        <div className="flex items-center gap-2">
+          <span>Level 12, Hamid Tower, 22 DIT II Circle, Dhaka</span>
         </div>
+      </footer>
 
-        {/* Footer */}
-        <div className="p-4 bg-[#F5F1EB] border-t border-[#E6E0D6] flex items-center justify-between text-xs text-[#7F8881]">
-          <span>Synced locally in browser session storage</span>
-          <button
-            onClick={onClose}
-            className="px-4 py-2 bg-[#2D4532] text-white text-xs font-semibold rounded-xs hover:bg-[#223626] transition-colors cursor-pointer"
-          >
-            Close Console
-          </button>
-        </div>
-      </div>
+      {/* Add Dish Modal */}
+      <AddDishModal
+        isOpen={isAddDishModalOpen}
+        onClose={() => setIsAddDishModalOpen(false)}
+        onAddDish={handleAddDish}
+      />
     </div>
   );
 }

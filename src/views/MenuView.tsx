@@ -1,14 +1,16 @@
 import { useState, useMemo } from 'react';
 import { Search, Plus, Check, Filter, Sparkles } from 'lucide-react';
-import { INITIAL_MENU_ITEMS, MENU_CATEGORIES } from '../data/restaurantData';
+import { MENU_CATEGORIES } from '../data/restaurantData';
 import { MenuItem } from '../types';
 import { useCart } from '../context/CartContext';
+import { useMenu } from '../context/MenuContext';
 
 interface MenuViewProps {
   onNavigate: (view: string) => void;
 }
 
 export function MenuView({ onNavigate }: MenuViewProps) {
+  const { menuItems } = useMenu();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [dietaryFilter, setDietaryFilter] = useState<'all' | 'vegetarian' | 'popular'>('all');
@@ -23,7 +25,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
   };
 
   const filteredDishes = useMemo(() => {
-    return INITIAL_MENU_ITEMS.filter(dish => {
+    return menuItems.filter(dish => {
       // Category check
       const matchesCategory =
         selectedCategory === 'all' || dish.category === selectedCategory;

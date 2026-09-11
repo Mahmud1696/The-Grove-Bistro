@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, ArrowUp, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, Clock, ArrowUp, ShieldCheck, ChefHat, ArrowUpRight } from 'lucide-react';
 import { RESTAURANT_INFO } from '../data/restaurantData';
 
 interface FooterProps {
@@ -150,14 +150,30 @@ export function Footer({ onNavigate, onOpenPrivacy, onOpenTerms, onOpenStaffPort
               </li>
             </ul>
 
-            <div className="pt-2">
+            {/* Intentional Executive & Kitchen Portal Entry */}
+            <div className="pt-3">
+              <div className="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#828F84] mb-2">
+                Executive & Kitchen
+              </div>
               <button
                 id="footer-staff-portal-btn"
                 onClick={onOpenStaffPortal}
-                className="inline-flex items-center gap-1.5 text-xs text-[#828F84] hover:text-[#A3B899] transition-colors cursor-pointer"
+                className="group w-full p-3 rounded-sm bg-[#1A231C] hover:bg-[#233126] border border-[#2D3F30] hover:border-[#425C47] transition-all duration-200 text-left cursor-pointer shadow-xs flex items-center justify-between"
               >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Manager / Kitchen Portal</span>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-xs bg-[#2D4532] flex items-center justify-center text-[#A3B899] group-hover:text-white transition-colors shrink-0">
+                    <ChefHat className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-white group-hover:text-[#A3B899] transition-colors flex items-center gap-1.5">
+                      <span>Manager / Kitchen Portal</span>
+                    </div>
+                    <div className="text-[10px] text-[#828F84] mt-0.5">
+                      Orders • Dishes • BDT Analytics
+                    </div>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-[#828F84] group-hover:text-[#A3B899] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
               </button>
             </div>
           </div>

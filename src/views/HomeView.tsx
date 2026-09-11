@@ -7,7 +7,8 @@ import { ReservationCTA } from '../components/ReservationCTA';
 import { ReviewsSection } from '../components/ReviewsSection';
 import { LocationMapSection } from '../components/LocationMapSection';
 import { InstagramSection } from '../components/InstagramSection';
-import { INITIAL_MENU_ITEMS, GALLERY_ITEMS } from '../data/restaurantData';
+import { GALLERY_ITEMS } from '../data/restaurantData';
+import { useMenu } from '../context/MenuContext';
 import { ArrowRight, Eye } from 'lucide-react';
 
 interface HomeViewProps {
@@ -16,6 +17,7 @@ interface HomeViewProps {
 }
 
 export function HomeView({ onNavigate, onOpenLightbox }: HomeViewProps) {
+  const { menuItems } = useMenu();
   const galleryPreview = GALLERY_ITEMS.slice(0, 6);
 
   return (
@@ -30,7 +32,7 @@ export function HomeView({ onNavigate, onOpenLightbox }: HomeViewProps) {
       <AboutSection onNavigate={onNavigate} />
 
       {/* 5. Featured Dishes */}
-      <SignatureDishes dishes={INITIAL_MENU_ITEMS} onNavigate={onNavigate} />
+      <SignatureDishes dishes={menuItems} onNavigate={onNavigate} />
 
       {/* 6. Restaurant Experience / Atmosphere */}
       <ExperienceSection />
