@@ -80,89 +80,88 @@ export function AdminDashboardTab({
       {/* 4 Primary Hero KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: Total Amount Sold */}
-        <div className="bg-[#18211A] border border-[#2D3F30] p-5 rounded-sm relative overflow-hidden group">
-          <div className="flex items-center justify-between text-[#828F84] mb-3">
-            <span className="text-xs uppercase tracking-wider font-medium text-[#A3B899]">
+        <div className="bg-white border border-gray-200 p-5 rounded-sm shadow-xs relative overflow-hidden group">
+          <div className="flex items-center justify-between text-gray-500 mb-2">
+            <span className="text-xs uppercase tracking-wider font-semibold text-gray-600">
               Total Revenue (BDT)
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#243327] flex items-center justify-center text-[#A3B899]">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-900">
               <span className="font-serif-display font-bold text-sm">৳</span>
             </div>
           </div>
-          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
             ৳ {totalAmountSold.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400 mt-2 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-emerald-700 mt-2 font-medium">
             <TrendingUp className="w-3.5 h-3.5" />
             <span>Gross billing across {totalOrders} recorded orders</span>
           </div>
-          <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tl from-[#2D4532]/20 to-transparent pointer-events-none" />
         </div>
 
         {/* Metric 2: Total Orders */}
-        <div className="bg-[#18211A] border border-[#2D3F30] p-5 rounded-sm relative overflow-hidden group">
-          <div className="flex items-center justify-between text-[#828F84] mb-3">
-            <span className="text-xs uppercase tracking-wider font-medium text-[#A3B899]">
+        <div className="bg-white border border-gray-200 p-5 rounded-sm shadow-xs relative overflow-hidden group">
+          <div className="flex items-center justify-between text-gray-500 mb-2">
+            <span className="text-xs uppercase tracking-wider font-semibold text-gray-600">
               Total Orders
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#243327] flex items-center justify-center text-[#A3B899]">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-900">
               <ShoppingBag className="w-4 h-4" />
             </div>
           </div>
-          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            {totalOrders} <span className="text-sm font-normal text-[#828F84]">Tickets</span>
+          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+            {totalOrders} <span className="text-sm font-normal text-gray-500">Tickets</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-[#828F84] mt-2">
-            <span className="text-amber-400 font-medium">{activeOrdersCount} in preparation</span>
+          <div className="flex items-center gap-2 text-xs text-gray-600 mt-2">
+            <span className="text-amber-700 font-semibold">{activeOrdersCount} in kitchen</span>
             <span>•</span>
-            <span className="text-emerald-400 font-medium">{completedOrdersCount} fulfilled</span>
+            <span className="text-emerald-700 font-semibold">{completedOrdersCount} fulfilled</span>
           </div>
         </div>
 
         {/* Metric 3: Total Dishes / Items Sold */}
-        <div className="bg-[#18211A] border border-[#2D3F30] p-5 rounded-sm relative overflow-hidden group">
-          <div className="flex items-center justify-between text-[#828F84] mb-3">
-            <span className="text-xs uppercase tracking-wider font-medium text-[#A3B899]">
+        <div className="bg-white border border-gray-200 p-5 rounded-sm shadow-xs relative overflow-hidden group">
+          <div className="flex items-center justify-between text-gray-500 mb-2">
+            <span className="text-xs uppercase tracking-wider font-semibold text-gray-600">
               Total Dishes Sold
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#243327] flex items-center justify-center text-[#A3B899]">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-900">
               <UtensilsCrossed className="w-4 h-4" />
             </div>
           </div>
-          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            {totalDishesSold} <span className="text-sm font-normal text-[#828F84]">Portions</span>
+          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+            {totalDishesSold} <span className="text-sm font-normal text-gray-500">Portions</span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-[#828F84] mt-2">
+          <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
             <span>Catalog contains {menuItems.length} active dishes</span>
           </div>
         </div>
 
         {/* Metric 4: Average Order Value */}
-        <div className="bg-[#18211A] border border-[#2D3F30] p-5 rounded-sm relative overflow-hidden group">
-          <div className="flex items-center justify-between text-[#828F84] mb-3">
-            <span className="text-xs uppercase tracking-wider font-medium text-[#A3B899]">
+        <div className="bg-white border border-gray-200 p-5 rounded-sm shadow-xs relative overflow-hidden group">
+          <div className="flex items-center justify-between text-gray-500 mb-2">
+            <span className="text-xs uppercase tracking-wider font-semibold text-gray-600">
               Average Ticket (AOV)
             </span>
-            <div className="w-8 h-8 rounded-full bg-[#243327] flex items-center justify-center text-[#A3B899]">
+            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-900">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          <div className="font-serif-display text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
             ৳ {averageOrderValue.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-[#828F84] mt-2">
+          <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
             <span>Avg spend per guest / delivery order</span>
           </div>
         </div>
       </div>
 
       {/* Operational Dispatch Banner */}
-      <div className="bg-[#141A15] border border-[#243327] p-4 rounded-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-emerald-50/70 border border-emerald-200/80 p-4 rounded-sm flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="w-3 h-3 rounded-full bg-emerald-600 animate-pulse" />
           <div className="text-xs">
-            <span className="font-medium text-white">Hamid Tower Culinary Dispatch:</span>{' '}
-            <span className="text-[#A3B899]">
+            <span className="font-bold text-gray-900">Hamid Tower Culinary Dispatch:</span>{' '}
+            <span className="text-gray-700 font-medium">
               {activeOrdersCount} in kitchen • {readyOrdersCount} ready for handoff • {completedOrdersCount} fulfilled
             </span>
           </div>
@@ -170,14 +169,14 @@ export function AdminDashboardTab({
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenAddDish}
-            className="px-3.5 py-1.5 bg-[#2D4532] hover:bg-[#39573f] text-white text-xs font-medium uppercase tracking-wider rounded-xs transition-colors cursor-pointer flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-medium uppercase tracking-wider rounded-xs transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Dish to Website</span>
           </button>
           <button
             onClick={() => onNavigateTab('orders')}
-            className="px-3.5 py-1.5 bg-[#1C251E] hover:bg-[#28362B] text-[#C8D1CA] hover:text-white text-xs font-medium uppercase tracking-wider rounded-xs border border-[#2D3F30] transition-colors cursor-pointer flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-white hover:bg-gray-100 text-gray-900 text-xs font-semibold uppercase tracking-wider rounded-xs border border-gray-300 transition-colors cursor-pointer flex items-center gap-1.5 shadow-xs"
           >
             <span>Manage Orders</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -188,19 +187,19 @@ export function AdminDashboardTab({
       {/* Two Columns: Recent Orders & Top Selling Dishes */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders (2 Columns) */}
-        <div className="lg:col-span-2 bg-[#18211A] border border-[#2D3F30] rounded-sm p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-[#243327] pb-3">
+        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-sm p-5 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-gray-200 pb-3">
             <div>
-              <h3 className="font-serif-display text-base font-semibold text-white">
+              <h3 className="font-serif-display text-base font-bold text-gray-900">
                 Live Kitchen & Delivery Feed
               </h3>
-              <p className="text-xs text-[#828F84]">
+              <p className="text-xs text-gray-500">
                 Latest incoming customer orders from Dhaka diners
               </p>
             </div>
             <button
               onClick={() => onNavigateTab('orders')}
-              className="text-xs text-[#A3B899] hover:text-white flex items-center gap-1 font-medium transition-colors"
+              className="text-xs text-gray-700 hover:text-black flex items-center gap-1 font-semibold transition-colors"
             >
               <span>View All ({orders.length})</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -211,40 +210,40 @@ export function AdminDashboardTab({
             {recentOrders.map(order => (
               <div
                 key={order.orderId}
-                className="p-4 bg-[#141A15] border border-[#243327] rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#384c3c] transition-colors"
+                className="p-4 bg-gray-50/70 border border-gray-200 rounded-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-gray-300 hover:bg-white transition-colors"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-serif-display font-bold text-sm text-white">
+                    <span className="font-serif-display font-bold text-sm text-gray-900">
                       {order.orderId}
                     </span>
-                    <span className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full ${
+                    <span className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border ${
                       order.orderStatus === 'Preparing'
-                        ? 'bg-amber-900/60 text-amber-300 border border-amber-700/50'
+                        ? 'bg-amber-100 text-amber-900 border-amber-300'
                         : order.orderStatus === 'Confirmed'
-                        ? 'bg-blue-900/60 text-blue-300 border border-blue-700/50'
+                        ? 'bg-blue-50 text-blue-800 border-blue-200'
                         : order.orderStatus === 'Ready'
-                        ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-700/50'
-                        : 'bg-[#243327] text-[#A3B899]'
+                        ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                        : 'bg-gray-200 text-gray-800 border-gray-300'
                     }`}>
                       {order.orderStatus}
                     </span>
-                    <span className="text-xs text-[#828F84] capitalize">
+                    <span className="text-xs text-gray-600 font-medium capitalize">
                       • {order.orderType} ({order.tableReference || order.area || 'Pickup'})
                     </span>
                   </div>
 
-                  <div className="text-xs text-[#C8D1CA]">
-                    <span className="font-medium text-white">{order.customerName}</span> ({order.phone})
+                  <div className="text-xs text-gray-800">
+                    <span className="font-semibold text-gray-900">{order.customerName}</span> ({order.phone})
                   </div>
 
-                  <div className="text-xs text-[#828F84]">
+                  <div className="text-xs text-gray-600">
                     {order.items.map(it => `${it.quantity}x ${it.item.name}`).join(', ')}
                   </div>
                 </div>
 
                 <div className="sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-2">
-                  <div className="font-serif-display font-semibold text-base text-white">
+                  <div className="font-serif-display font-bold text-base text-gray-900">
                     ৳ {order.total.toLocaleString()}
                   </div>
 
@@ -252,7 +251,7 @@ export function AdminDashboardTab({
                   {order.orderStatus === 'Pending' && (
                     <button
                       onClick={() => onUpdateOrderStatus(order.orderId, 'Confirmed')}
-                      className="px-2.5 py-1 text-[11px] bg-[#2D4532] text-white rounded-xs hover:bg-[#39573f] transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] bg-gray-900 text-white rounded-xs hover:bg-black transition-colors cursor-pointer font-medium"
                     >
                       Confirm Order
                     </button>
@@ -260,7 +259,7 @@ export function AdminDashboardTab({
                   {order.orderStatus === 'Confirmed' && (
                     <button
                       onClick={() => onUpdateOrderStatus(order.orderId, 'Preparing')}
-                      className="px-2.5 py-1 text-[11px] bg-amber-800 text-white rounded-xs hover:bg-amber-700 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] bg-amber-600 text-white rounded-xs hover:bg-amber-700 transition-colors cursor-pointer font-medium"
                     >
                       Start Cooking
                     </button>
@@ -268,7 +267,7 @@ export function AdminDashboardTab({
                   {order.orderStatus === 'Preparing' && (
                     <button
                       onClick={() => onUpdateOrderStatus(order.orderId, 'Ready')}
-                      className="px-2.5 py-1 text-[11px] bg-emerald-800 text-white rounded-xs hover:bg-emerald-700 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] bg-emerald-700 text-white rounded-xs hover:bg-emerald-800 transition-colors cursor-pointer font-medium"
                     >
                       Mark Ready
                     </button>
@@ -276,7 +275,7 @@ export function AdminDashboardTab({
                   {order.orderStatus === 'Ready' && (
                     <button
                       onClick={() => onUpdateOrderStatus(order.orderId, order.orderType === 'delivery' ? 'Out for delivery' : 'Completed')}
-                      className="px-2.5 py-1 text-[11px] bg-[#2D4532] text-white rounded-xs hover:bg-[#39573f] transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] bg-gray-900 text-white rounded-xs hover:bg-black transition-colors cursor-pointer font-medium"
                     >
                       {order.orderType === 'delivery' ? 'Dispatch' : 'Complete'}
                     </button>
@@ -284,7 +283,7 @@ export function AdminDashboardTab({
                   {order.orderStatus === 'Out for delivery' && (
                     <button
                       onClick={() => onUpdateOrderStatus(order.orderId, 'Completed')}
-                      className="px-2.5 py-1 text-[11px] bg-emerald-700 text-white rounded-xs hover:bg-emerald-600 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 text-[11px] bg-emerald-700 text-white rounded-xs hover:bg-emerald-800 transition-colors cursor-pointer font-medium"
                     >
                       Mark Delivered
                     </button>
@@ -296,20 +295,20 @@ export function AdminDashboardTab({
         </div>
 
         {/* Top Selling Dishes (1 Column) */}
-        <div className="bg-[#18211A] border border-[#2D3F30] rounded-sm p-5 space-y-4 flex flex-col justify-between">
+        <div className="bg-white border border-gray-200 rounded-sm p-5 space-y-4 flex flex-col justify-between shadow-xs">
           <div>
-            <div className="flex items-center justify-between border-b border-[#243327] pb-3 mb-4">
+            <div className="flex items-center justify-between border-b border-gray-200 pb-3 mb-4">
               <div>
-                <h3 className="font-serif-display text-base font-semibold text-white">
+                <h3 className="font-serif-display text-base font-bold text-gray-900">
                   Top Performing Dishes
                 </h3>
-                <p className="text-xs text-[#828F84]">
+                <p className="text-xs text-gray-500">
                   Best sellers ranked by order volume
                 </p>
               </div>
               <button
                 onClick={() => onNavigateTab('dishes')}
-                className="text-xs text-[#A3B899] hover:text-white transition-colors"
+                className="text-xs text-gray-700 hover:text-black font-semibold transition-colors"
               >
                 Dishes
               </button>
@@ -317,28 +316,28 @@ export function AdminDashboardTab({
 
             <div className="space-y-3">
               {topDishes.length === 0 ? (
-                <div className="text-xs text-[#828F84] py-6 text-center">
+                <div className="text-xs text-gray-500 py-6 text-center">
                   Order items will generate popularity statistics here.
                 </div>
               ) : (
                 topDishes.map((dish, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3 p-2.5 bg-[#141A15] border border-[#243327] rounded-xs"
+                    className="flex items-center gap-3 p-2.5 bg-gray-50 border border-gray-200 rounded-xs"
                   >
-                    <div className="font-serif-display font-bold text-xs text-[#828F84] w-4 text-center">
+                    <div className="font-serif-display font-bold text-xs text-gray-500 w-4 text-center">
                       #{i + 1}
                     </div>
                     <img
                       src={dish.image}
                       alt={dish.name}
-                      className="w-10 h-10 object-cover rounded-xs border border-[#243327] shrink-0"
+                      className="w-10 h-10 object-cover rounded-xs border border-gray-200 shrink-0"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="text-xs font-medium text-white truncate">
+                      <div className="text-xs font-semibold text-gray-900 truncate">
                         {dish.name}
                       </div>
-                      <div className="text-[11px] text-[#828F84]">
+                      <div className="text-[11px] text-gray-600">
                         {dish.count} sold • ৳ {dish.revenue.toLocaleString()}
                       </div>
                     </div>
@@ -348,12 +347,12 @@ export function AdminDashboardTab({
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#243327]">
+          <div className="pt-4 border-t border-gray-200">
             <button
               onClick={() => onNavigateTab('analytics')}
-              className="w-full py-2.5 bg-[#243327] hover:bg-[#2e4032] text-xs text-[#E4EDE6] hover:text-white rounded-xs border border-[#2D3F30] font-medium transition-colors cursor-pointer flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-xs text-gray-900 rounded-xs border border-gray-200 font-semibold transition-colors cursor-pointer flex items-center justify-center gap-2"
             >
-              <TrendingUp className="w-3.5 h-3.5 text-[#A3B899]" />
+              <TrendingUp className="w-3.5 h-3.5 text-gray-700" />
               <span>Explore Detailed Sales Analytics</span>
             </button>
           </div>

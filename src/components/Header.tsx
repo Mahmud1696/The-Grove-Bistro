@@ -69,14 +69,21 @@ export function Header({ currentView, onNavigate, onOpenStaffPortal }: HeaderPro
           <button
             id="brand-logo-btn"
             onClick={() => handleNavClick('home')}
-            className="text-left group cursor-pointer focus:outline-none"
+            className="text-left group cursor-pointer focus:outline-none flex items-center gap-3"
           >
-            <span className="block text-xs uppercase tracking-[0.25em] font-medium opacity-80 group-hover:opacity-100 transition-opacity">
-              Dhaka • Gulshan 2
-            </span>
-            <span className="font-serif-display text-xl sm:text-2xl tracking-wide font-semibold">
-              THE GROVE BISTRO
-            </span>
+            <img
+              src="/favicon.svg"
+              alt="The Grove Bistro Logo"
+              className="w-10 h-10 rounded-xs object-cover border border-[#D8B573]/40 shadow-xs group-hover:border-[#D8B573] transition-colors shrink-0"
+            />
+            <div>
+              <span className="block text-xs uppercase tracking-[0.25em] font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+                Dhaka • Gulshan 2
+              </span>
+              <span className="font-serif-display text-xl sm:text-2xl tracking-wide font-semibold">
+                THE GROVE BISTRO
+              </span>
+            </div>
           </button>
 
           {/* Desktop Navigation */}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&amp;family=Alex+Brush&amp;display=swap');
+      .bg { fill: #1C3026; }
+      .border-line { stroke: #D8B573; fill: none; stroke-width: 6; }
+      .the-text { font-family: 'Alex Brush', 'Playfair Display', Georgia, serif; font-style: italic; font-size: 68px; fill: #D8B573; text-anchor: middle; }
+      .grove-text { font-family: 'Playfair Display', 'Times New Roman', Georgia, serif; font-weight: 700; font-size: 88px; fill: #D8B573; letter-spacing: 0.12em; text-anchor: middle; }
+      .bistro-text { font-family: 'Alex Brush', 'Playfair Display', Georgia, serif; font-style: italic; font-size: 58px; fill: #D8B573; text-anchor: middle; }
+    </style>
+  </defs>
+  
+  <!-- Dark Green Background Canvas -->
+  <rect width="512" height="512" class="bg" />
+  
+  <!-- Outer Gold Border Frame -->
+  <rect x="22" y="22" width="468" height="468" class="border-line" />
+  
+  <!-- "The" Script Typography -->
+  <text x="256" y="220" class="the-text">The</text>
+  
+  <!-- "GROVE" Bold Serif Typography -->
+  <text x="256" y="305" class="grove-text">GROVE</text>
+  
+  <!-- "bistro" Script Typography -->
+  <text x="256" y="365" class="bistro-text">bistro</text>
+</svg>

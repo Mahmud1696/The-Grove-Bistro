@@ -19,12 +19,21 @@ export function Footer({ onNavigate, onOpenPrivacy, onOpenTerms, onOpenStaffPort
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-[#242C25]">
           {/* Column 1: Brand */}
           <div className="lg:col-span-4 space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#A3B899] font-medium block">
-              Dhaka • Gulshan Circle 2
-            </span>
-            <h3 className="font-serif-display text-2xl tracking-wide font-normal">
-              THE GROVE BISTRO
-            </h3>
+            <div className="flex items-center gap-3">
+              <img
+                src="/favicon.svg"
+                alt="The Grove Bistro Logo"
+                className="w-12 h-12 rounded-xs object-cover border border-[#D8B573]/40 shadow-xs shrink-0"
+              />
+              <div>
+                <span className="text-[11px] uppercase tracking-[0.25em] text-[#A3B899] font-medium block">
+                  Dhaka • Gulshan Circle 2
+                </span>
+                <h3 className="font-serif-display text-2xl tracking-wide font-normal">
+                  THE GROVE BISTRO
+                </h3>
+              </div>
+            </div>
             <p className="font-sans-ui text-sm text-[#A8B2AA] font-light leading-relaxed max-w-sm">
               A contemporary culinary sanctuary perched on Level 12 of Hamid Tower. Thoughtfully prepared slow-cooked meats, artisanal pasta, and unhurried hospitality.
             </p>
@@ -158,22 +167,22 @@ export function Footer({ onNavigate, onOpenPrivacy, onOpenTerms, onOpenStaffPort
               <button
                 id="footer-staff-portal-btn"
                 onClick={onOpenStaffPortal}
-                className="group w-full p-3 rounded-sm bg-[#1A231C] hover:bg-[#233126] border border-[#2D3F30] hover:border-[#425C47] transition-all duration-200 text-left cursor-pointer shadow-xs flex items-center justify-between"
+                className="group w-full p-3 rounded-sm bg-[#1B231D] hover:bg-[#232F26] border border-[#2D3B2F] hover:border-[#3E5341] transition-all duration-200 text-left cursor-pointer shadow-xs flex items-center justify-between"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-xs bg-[#2D4532] flex items-center justify-center text-[#A3B899] group-hover:text-white transition-colors shrink-0">
+                  <div className="w-8 h-8 rounded-xs bg-[#243327] flex items-center justify-center text-[#A3B899] group-hover:text-white transition-colors shrink-0 border border-[#334637]">
                     <ChefHat className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-white group-hover:text-[#A3B899] transition-colors flex items-center gap-1.5">
+                    <div className="text-xs font-semibold text-[#FAF8F5] group-hover:text-[#A3B899] transition-colors flex items-center gap-1.5">
                       <span>Manager / Kitchen Portal</span>
                     </div>
-                    <div className="text-[10px] text-[#828F84] mt-0.5">
+                    <div className="text-[10px] text-[#8A958C] mt-0.5 font-medium">
                       Orders • Dishes • BDT Analytics
                     </div>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-[#828F84] group-hover:text-[#A3B899] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                <ArrowUpRight className="w-4 h-4 text-[#8A958C] group-hover:text-[#A3B899] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
               </button>
             </div>
           </div>
