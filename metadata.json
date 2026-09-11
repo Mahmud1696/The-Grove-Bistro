@@ -1,0 +1,6 @@
+{
+  "name": "The Grove Bistro",
+  "description": "A refined dining experience in Dhaka. Contemporary bistro serving thoughtfully prepared steaks, pastas, seafood, and desserts at Hamid Tower, Gulshan-2.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
