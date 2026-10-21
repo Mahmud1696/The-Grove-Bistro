@@ -77,8 +77,77 @@ export interface Reservation {
   guests: number;
   occasion: string;
   specialRequest?: string;
+  tableNumber?: string;
   status: 'Confirmed' | 'Pending' | 'Cancelled';
   createdAt: string;
+}
+
+export type PortalTab = 
+  | 'overview' 
+  | 'orders' 
+  | 'kitchen' 
+  | 'dishes' 
+  | 'bookings' 
+  | 'customers' 
+  | 'analytics' 
+  | 'reports' 
+  | 'settings';
+
+export interface CustomerRecord {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  addresses: string[];
+  totalOrders: number;
+  lifetimeSpend: number;
+  averageOrderValue: number;
+  lastOrderDate: string;
+  preferredChannel: OrderType;
+  notes?: string;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  action: string;
+  category: 'order' | 'menu' | 'booking' | 'system' | 'security';
+  user: string;
+  details: string;
+}
+
+export interface RestaurantSettings {
+  profile: {
+    name: string;
+    tagline: string;
+    phone: string;
+    email: string;
+    address: string;
+    operatingHours: string;
+    kitchenCloses: string;
+    currencySymbol: string;
+  };
+  fulfillment: {
+    isOnlineOrderingActive: boolean;
+    announcementBanner: string;
+    baseDeliveryFee: number;
+    freeDeliveryThreshold: number;
+    defaultPrepTimeMinutes: number;
+    deliveryPrepTimeMinutes: number;
+    deliveryAreas: string[];
+  };
+  payments: {
+    enableCashOnDelivery: boolean;
+    enablePayOnPickup: boolean;
+    enableOnlinePayment: boolean;
+    taxPercentage: number;
+    serviceChargePercentage: number;
+  };
+  notifications: {
+    soundAlertsEnabled: boolean;
+    kitchenAutoPrint: boolean;
+    lowStockWarnings: boolean;
+  };
 }
 
 export interface Review {

@@ -8,6 +8,7 @@ interface MenuContextType {
   updateMenuItem: (id: string, updates: Partial<MenuItem>) => void;
   deleteMenuItem: (id: string) => void;
   toggleDishAvailability: (id: string) => void;
+  duplicateMenuItem: (id: string) => MenuItem | undefined;
   resetMenuToDefault: () => void;
 }
 
@@ -67,6 +68,18 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const duplicateMenuItem = (id: string): MenuItem | undefined => {
+    const existing = menuItems.find(item => item.id === id);
+    if (!existing) return undefined;
+    const duplicated: MenuItem = {
+      ...existing,
+      id: `dish-${Date.now()}`,
+      name: `${existing.name} (Copy)`
+    };
+    setMenuItems(prev => [duplicated, ...prev]);
+    return duplicated;
+  };
+
   const resetMenuToDefault = () => {
     setMenuItems(INITIAL_MENU_ITEMS);
   };
@@ -79,6 +92,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
         updateMenuItem,
         deleteMenuItem,
         toggleDishAvailability,
+        duplicateMenuItem,
         resetMenuToDefault,
       }}
     >

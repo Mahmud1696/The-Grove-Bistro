@@ -79,7 +79,11 @@ export default function App() {
           <ReservationProvider>
             <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1A1E1B] selection:bg-[#2D4532] selection:text-white">
             {/* Main Sticky Header */}
-            <Header currentView={currentView} onNavigate={navigateTo} />
+            <Header 
+              currentView={currentView} 
+              onNavigate={navigateTo} 
+              onOpenStaffPortal={() => setStaffPortalOpen(true)} 
+            />
 
             {/* View Switching */}
             <main className="flex-1">

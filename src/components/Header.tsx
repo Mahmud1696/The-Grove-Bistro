@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Menu, X, Phone, MapPin, Calendar, UtensilsCrossed } from 'lucide-react';
+import { ShoppingBag, Menu, X, Phone, MapPin, Calendar, UtensilsCrossed, Lock, ChefHat } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { RESTAURANT_INFO } from '../data/restaurantData';
 
@@ -155,6 +155,23 @@ export function Header({ currentView, onNavigate, onOpenStaffPortal }: HeaderPro
               Order Online
             </button>
 
+            {/* Discreet Manager Portal Trigger */}
+            {onOpenStaffPortal && (
+              <button
+                id="header-staff-portal-btn"
+                onClick={onOpenStaffPortal}
+                title="Manager & Kitchen Portal (PIN: 12345)"
+                aria-label="Manager & Kitchen Portal"
+                className={`p-2.5 rounded-full transition-colors cursor-pointer ${
+                  isHeroTransparent
+                    ? 'hover:bg-white/15 text-white/80 hover:text-white'
+                    : 'hover:bg-[#EFEAE2] text-[#4A534B] hover:text-[#1E221E]'
+                }`}
+              >
+                <Lock className="w-4 h-4" />
+              </button>
+            )}
+
             {/* Mobile Hamburger Toggle */}
             <button
               id="mobile-menu-toggle-btn"
@@ -211,6 +228,20 @@ export function Header({ currentView, onNavigate, onOpenStaffPortal }: HeaderPro
               >
                 Reserve a Table
               </button>
+
+              {onOpenStaffPortal && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenStaffPortal();
+                  }}
+                  className="w-full py-2.5 px-3 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-semibold rounded-sm flex items-center justify-center gap-2 cursor-pointer border border-stone-200"
+                >
+                  <ChefHat className="w-4 h-4 text-[#2D4532]" />
+                  <span>Manager & Kitchen Portal (PIN: 12345)</span>
+                </button>
+              )}
             </div>
 
             <div className="pt-4 text-xs text-[#6F7770] space-y-2 border-t border-[#EAE4DC]">
