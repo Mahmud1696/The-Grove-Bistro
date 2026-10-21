@@ -198,12 +198,19 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                       className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-500 ease-out"
                     />
                     <div className="absolute top-3 left-3 bg-[#1A1E1B]/80 backdrop-blur-xs text-[#FAF8F5] text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-xs">
-                      {dish.category.replace('-', ' ')}
+                      {MENU_CATEGORIES.find(c => c.id === dish.category)?.name || dish.category.replace('-', ' ')}
                     </div>
                     {dish.popular && (
                       <div className="absolute top-3 right-3 bg-amber-700/90 text-white text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-xs flex items-center gap-1">
                         <Sparkles className="w-3 h-3" />
                         <span>Popular</span>
+                      </div>
+                    )}
+                    {dish.available === false && (
+                      <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] flex items-center justify-center">
+                        <span className="bg-red-900/90 text-white text-xs uppercase tracking-widest font-bold px-3 py-1 rounded-xs shadow-md">
+                          Out of Stock
+                        </span>
                       </div>
                     )}
                   </div>
@@ -236,27 +243,36 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                         )}
                       </div>
 
-                      <button
-                        id={`menu-add-${dish.id}`}
-                        onClick={() => handleAdd(dish)}
-                        className={`w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
-                          isJustAdded
-                            ? 'bg-[#2D4532] text-white'
-                            : 'bg-[#FAF8F5] hover:bg-[#2D4532] border border-[#DDD5CA] hover:border-[#2D4532] text-[#1A1E1B] hover:text-white'
-                        }`}
-                      >
-                        {isJustAdded ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-white" />
-                            <span>Added to Cart</span>
-                          </>
-                        ) : (
-                          <>
-                            <Plus className="w-3.5 h-3.5" />
-                            <span>Add to Order</span>
-                          </>
-                        )}
-                      </button>
+                      {dish.available === false ? (
+                        <button
+                          disabled
+                          className="w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed text-center"
+                        >
+                          Temporarily Unavailable
+                        </button>
+                      ) : (
+                        <button
+                          id={`menu-add-${dish.id}`}
+                          onClick={() => handleAdd(dish)}
+                          className={`w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                            isJustAdded
+                              ? 'bg-[#2D4532] text-white'
+                              : 'bg-[#FAF8F5] hover:bg-[#2D4532] border border-[#DDD5CA] hover:border-[#2D4532] text-[#1A1E1B] hover:text-white'
+                          }`}
+                        >
+                          {isJustAdded ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-white" />
+                              <span>Added to Cart</span>
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Add to Order</span>
+                            </>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
