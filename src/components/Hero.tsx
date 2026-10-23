@@ -26,7 +26,7 @@ export function Hero({ onNavigate }: HeroProps) {
         className="absolute inset-0 z-0"
       >
         <img
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=85"
+          src="/assets/aistudio/745019829_1083828577314941_875227384916130874_n_528e9966.jpg"
           alt="The Grove Bistro ambient dining interior at Hamid Tower, Gulshan"
           className="w-full h-full object-cover object-center"
         />

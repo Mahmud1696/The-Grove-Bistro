@@ -379,7 +379,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: 'gal-grove-coffee',
     title: 'The Grove Artisan Roast & Botanical Cup',
-    category: 'FOOD',
+    category: 'BEVERAGE',
     imageUrl: '/assets/aistudio/747753191_1083828523981613_1738728827763148336_n_99727991.jpg',
     caption: 'Specialty hot coffee poured into custom botanical painted cups for relaxed cafe moments and work sessions.'
   },

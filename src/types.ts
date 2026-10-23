@@ -168,7 +168,7 @@ export interface Review {
 export interface GalleryItem {
   id: string;
   title: string;
-  category: 'ALL' | 'FOOD' | 'INTERIOR' | 'AMBIENCE' | 'PEOPLE';
+  category: 'ALL' | 'FOOD' | 'BEVERAGE' | 'INTERIOR' | 'AMBIENCE' | 'PEOPLE';
   imageUrl: string;
   caption?: string;
 }

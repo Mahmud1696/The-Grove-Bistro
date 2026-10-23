@@ -20,8 +20,8 @@ export function AboutSection({ onNavigate }: AboutSectionProps) {
           >
             <div className="relative rounded-sm overflow-hidden aspect-[4/3] sm:aspect-[14/11] shadow-lg">
               <img
-                src="/assets/aistudio/745019829_1083828577314941_875227384916130874_n_528e9966.jpg"
-                alt="Interior ambiance and dining table setting with terrace foliage at The Grove Bistro Dhaka"
+                src="/assets/aistudio/745546055_1083828587314940_1887363832029969781_n_6341a8e4.jpg"
+                alt="Cozy ambient dining nook with warm amber lighting and velvet armchairs at The Grove Bistro"
                 className="w-full h-full object-cover object-center transform hover:scale-102 transition-transform duration-700"
                 loading="lazy"
               />

@@ -19,7 +19,8 @@ interface HomeViewProps {
 
 export function HomeView({ onNavigate, onOpenLightbox }: HomeViewProps) {
   const { menuItems } = useMenu();
-  const galleryPreview = GALLERY_ITEMS.slice(0, 6);
+  // Display strictly the 4 attached authentic images in Inside The Grove
+  const galleryPreview = GALLERY_ITEMS.slice(0, 4);
 
   return (
     <div id="home-view" className="space-y-0">
@@ -88,7 +89,7 @@ export function HomeView({ onNavigate, onOpenLightbox }: HomeViewProps) {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {galleryPreview.map((item, idx) => (
               <div
                 key={item.id}

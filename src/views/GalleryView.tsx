@@ -14,9 +14,10 @@ export function GalleryView({ onOpenLightbox, onNavigate }: GalleryViewProps) {
   const categories = [
     { label: 'All', value: 'all' },
     { label: 'Food', value: 'food' },
+    { label: 'Beverages & Coffee', value: 'beverage' },
     { label: 'Interior', value: 'interior' },
     { label: 'Ambience', value: 'ambience' },
-    { label: 'People & Kitchen', value: 'people' },
+    { label: 'People & Hospitality', value: 'people' },
   ];
 
   const filteredItems = GALLERY_ITEMS.filter(
