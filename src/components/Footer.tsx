@@ -144,7 +144,7 @@ export function Footer({ onNavigate, onOpenPrivacy, onOpenTerms, onOpenStaffPort
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                 >
-                  Instagram (@thegrovebistro.dhaka)
+                  Instagram (@grovebistro)
                 </a>
               </li>
               <li>

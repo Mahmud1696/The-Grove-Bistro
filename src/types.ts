@@ -160,6 +160,9 @@ export interface Review {
   date: string;
   visitType?: string;
   avatar?: string;
+  source?: string;
+  isLocalGuide?: boolean;
+  reviewCount?: string;
 }
 
 export interface GalleryItem {

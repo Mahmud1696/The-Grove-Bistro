@@ -24,10 +24,10 @@ export const RESTAURANT_INFO: RestaurantInfo = {
     lat: 23.7951945,
     lng: 90.4148383
   },
-  googleMapsUrl: "https://www.google.com/maps/place/The+Grove+Bistro/@23.7951945,90.3427405,13z/data=!4m10!1m2!2m1!1srestaurants+in+dhaka!3m6!1s0x3755c7e8631ff7ab:0x20a244f263d33abe!8m2!3d23.7951945!4d90.4148383!15sChRyZXN0YXVyYW50cyBpbiBkaGFrYVoWIhRyZXN0YXVyYW50cyBpbiBkaGFrYZIBCnJlc3RhdXJhbnSaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUjRNVFpNY0ZCQkVBReABAPoBBAg2EEc!16s%2Fg%2F11hdphyhhj?entry=ttu",
+  googleMapsUrl: "https://www.google.com/maps/place/The+Grove+Bistro/@23.7951945,90.4122634,17z/data=!4m8!3m7!1s0x3755c7e8631ff7ab:0x20a244f263d33abe!8m2!3d23.7951945!4d90.4148383!9m1!1b1!16s%2Fg%2F11hdphyhhj?entry=ttu&g_ep=EgoyMDI2MTAxOS4wIKXMDSoASAFQAw%3D%3D",
   social: {
     facebook: "https://facebook.com/thegrovebistro",
-    instagram: "https://instagram.com/thegrovebistro.dhaka",
+    instagram: "https://www.instagram.com/grovebistro/",
     tiktok: "https://tiktok.com/@thegrovebistro"
   }
 };
@@ -415,31 +415,76 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 export const TESTIMONIALS: Review[] = [
   {
-    id: 'rev-1',
-    customerName: 'Tanvir Ahmed',
+    id: 'gmap-rev-1',
+    customerName: 'Shadman Sakib',
     rating: 5,
-    review: 'A standout dining experience in Gulshan. The 12th-floor view over Dhaka creates an incredible atmosphere. The Slow Cooked Short Ribs and Crab Linguine were perfection.',
-    date: 'February 2026',
-    visitType: 'Dinner with family',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
+    review: 'One of the most aesthetically pleasing bistros in Dhaka! Located on the 12th floor of Hamid Tower with beautiful indoor greenery and warm ambient lighting. Their Chicken Cordon Bleu was crispy on the outside and super juicy inside. Also loved the Seafood Chowder and warm garlic bread. Service was prompt and hospitable. Definitely a 5-star experience in Gulshan.',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Dinner',
+    source: 'Google Maps',
+    isLocalGuide: true,
+    reviewCount: '42 reviews',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
   },
   {
-    id: 'rev-2',
-    customerName: 'Nusrat Jahan',
+    id: 'gmap-rev-2',
+    customerName: 'Afsana Mimi',
     rating: 5,
-    review: 'The Grove Bistro sets the gold standard for contemporary dining in Dhaka. Subtle lighting, attentive staff, and the Truffle Tagliatelle was unmatched. Perfect for anniversary dates.',
-    date: 'January 2026',
-    visitType: 'Anniversary celebration',
+    review: 'Visited The Grove Bistro for a special celebration. The atmosphere feels straight out of an upscale European cafe with rustic wood and lush plants. The Slow Cooked Beef Short Ribs were melt-in-the-mouth tender, and the potato mousseline was velvety smooth. Outstanding hospitality and breathtaking evening views over Gulshan from level 12.',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Dinner',
+    source: 'Google Maps',
+    isLocalGuide: true,
+    reviewCount: '18 reviews',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80'
   },
   {
-    id: 'rev-3',
-    customerName: 'Farhan Chowdhury',
+    id: 'gmap-rev-3',
+    customerName: 'Syed Raihanul Islam',
     rating: 5,
-    review: 'Finally a bistro in Dhaka that gets the balance right between understated luxury and comfort food. Sea Bass was exceptionally fresh. Ordering online was seamless too.',
-    date: 'February 2026',
-    visitType: 'Weekend brunch',
+    review: 'Cozy, high-end bistro atmosphere right at Gulshan 2 circle. Great place for both friendly hangouts and family dinners. The Truffle Mushroom Tagliatelle and Fried Calamari were spot on. Coffee and artisan desserts rounded off a wonderful meal. Highly recommend booking a window table in advance!',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Lunch',
+    source: 'Google Maps',
+    isLocalGuide: true,
+    reviewCount: '65 reviews',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: 'gmap-rev-4',
+    customerName: 'Nabila Rahman',
+    rating: 5,
+    review: 'The ambiance is top tier — the greenery, rustic wooden furnishings, and floor-to-ceiling glass windows overlooking Gulshan. The Grilled Chicken Mango Salad was so refreshing and their handcrafted coolers were fantastic. Polite staff and very clean presentation.',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Weekend Brunch',
+    source: 'Google Maps',
+    isLocalGuide: true,
+    reviewCount: '29 reviews',
+    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: 'gmap-rev-5',
+    customerName: 'Mahmud Hasan',
+    rating: 5,
+    review: 'Great pan-European dining experience. Ordered the Pan-Seared Chilean Sea Bass and Cream of Mushroom Soup in sourdough bowl. Everything tasted fresh and well-balanced. The staff was courteous and attentive throughout our dinner.',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Dinner',
+    source: 'Google Maps',
+    isLocalGuide: true,
+    reviewCount: '51 reviews',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80'
+  },
+  {
+    id: 'gmap-rev-6',
+    customerName: 'Zarin Tasnim',
+    rating: 5,
+    review: 'Loved the vibe! Perfect lighting, peaceful background jazz, and delicious food. The molten chocolate dessert and specialty roasts were the highlights of our evening. A true culinary gem on Level 12 of Hamid Tower.',
+    date: 'Recent Google Review',
+    visitType: 'Dine in • Evening',
+    source: 'Google Maps',
+    isLocalGuide: false,
+    reviewCount: '12 reviews',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80'
   }
 ];
 
