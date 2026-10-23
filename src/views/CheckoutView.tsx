@@ -233,18 +233,18 @@ export function CheckoutView({ onNavigate, onOpenOrderTracker }: CheckoutViewPro
                         Order #{confirmedOrder.orderId}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                       <input
                         type="text"
                         readOnly
                         value={trackingLink}
-                        className="flex-1 bg-white border border-[#DDD5CA] rounded-xs px-3 py-2 text-xs font-mono text-[#1A1E1B] select-all focus:outline-none"
+                        className="flex-1 min-h-[42px] bg-white border border-[#DDD5CA] rounded-xs px-3 py-2 text-xs font-mono text-[#1A1E1B] select-all focus:outline-none"
                       />
                       <button
                         type="button"
                         id="copy-tracking-link-btn"
                         onClick={handleCopy}
-                        className="px-4 py-2 bg-[#1B3B2B] hover:bg-black text-white text-xs font-semibold rounded-xs transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 shadow-2xs"
+                        className="min-h-[42px] px-4 py-2.5 bg-[#1B3B2B] hover:bg-black text-white text-xs font-semibold rounded-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5 shrink-0 shadow-2xs"
                       >
                         {copiedTrackingLink ? (
                           <>

@@ -135,7 +135,7 @@ export function ContactView() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1.5">
                       Your Name *
                     </label>
                     <input
@@ -144,11 +144,11 @@ export function ContactView() {
                       placeholder="Jane Doe"
                       value={name}
                       onChange={e => setName(e.target.value)}
-                      className="w-full p-2.5 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                      className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1.5">
                       Phone Number
                     </label>
                     <input
@@ -156,14 +156,14 @@ export function ContactView() {
                       placeholder="+880 1..."
                       value={phone}
                       onChange={e => setPhone(e.target.value)}
-                      className="w-full p-2.5 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                      className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1.5">
                       Email Address *
                     </label>
                     <input
@@ -172,17 +172,17 @@ export function ContactView() {
                       placeholder="jane@example.com"
                       value={email}
                       onChange={e => setEmail(e.target.value)}
-                      className="w-full p-2.5 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                      className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1.5">
                       Subject
                     </label>
                     <select
                       value={subject}
                       onChange={e => setSubject(e.target.value)}
-                      className="w-full p-2.5 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532] cursor-pointer"
+                      className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532] cursor-pointer"
                     >
                       <option value="General Inquiry">General Inquiry</option>
                       <option value="Private Dining / Event">Private Dining / Event</option>
@@ -193,7 +193,7 @@ export function ContactView() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-1.5">
                     Your Message *
                   </label>
                   <textarea
@@ -202,13 +202,13 @@ export function ContactView() {
                     placeholder="Tell us how we can help you..."
                     value={message}
                     onChange={e => setMessage(e.target.value)}
-                    className="w-full p-2.5 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                    className="w-full p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                  className="w-full min-h-[48px] py-3.5 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send Message</span>

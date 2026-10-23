@@ -28,15 +28,6 @@ export function QuickActionBar({ onNavigate }: QuickActionBarProps) {
       icon: Calendar,
       action: () => onNavigate('reservations'),
     },
-    {
-      id: 'quick-action-directions',
-      label: 'Get Directions',
-      sub: 'Hamid Tower, Gulshan-2',
-      icon: Compass,
-      action: () => {
-        window.open(RESTAURANT_INFO.googleMapsUrl, '_blank', 'noopener,noreferrer');
-      },
-    },
   ];
 
   return (
@@ -53,20 +44,39 @@ export function QuickActionBar({ onNavigate }: QuickActionBarProps) {
                 key={act.id}
                 id={act.id}
                 onClick={act.action}
-                className="group flex flex-col items-center sm:items-start text-center sm:text-left p-5 sm:p-6 hover:bg-[#F3EFE9] transition-colors duration-200 cursor-pointer focus:outline-none"
+                className="group flex flex-col items-center sm:items-start text-center sm:text-left p-4 sm:p-6 hover:bg-[#F3EFE9] transition-colors duration-200 cursor-pointer focus:outline-none min-h-[96px] justify-center"
               >
-                <div className="w-10 h-10 rounded-full bg-[#EFEAE2] group-hover:bg-[#2D4532] text-[#2D4532] group-hover:text-white flex items-center justify-center transition-colors mb-3">
+                <div className="w-10 h-10 rounded-full bg-[#EFEAE2] group-hover:bg-[#2D4532] text-[#2D4532] group-hover:text-white flex items-center justify-center transition-colors mb-2.5 sm:mb-3 shrink-0">
                   <Icon className="w-4 h-4" />
                 </div>
-                <h3 className="font-serif-display text-base font-semibold text-[#1E221E] group-hover:text-[#2D4532] transition-colors">
+                <h3 className="font-serif-display text-sm sm:text-base font-semibold text-[#1E221E] group-hover:text-[#2D4532] transition-colors leading-tight">
                   {act.label}
                 </h3>
-                <p className="text-xs text-[#6B726C] mt-0.5 line-clamp-1">
+                <p className="text-[11px] sm:text-xs text-[#6B726C] mt-1 line-clamp-1">
                   {act.sub}
                 </p>
               </button>
             );
           })}
+
+          {/* 4th Action: Get Directions as accessible link */}
+          <a
+            id="quick-action-directions"
+            href={RESTAURANT_INFO.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col items-center sm:items-start text-center sm:text-left p-4 sm:p-6 hover:bg-[#F3EFE9] transition-colors duration-200 cursor-pointer focus:outline-none min-h-[96px] justify-center"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#EFEAE2] group-hover:bg-[#2D4532] text-[#2D4532] group-hover:text-white flex items-center justify-center transition-colors mb-2.5 sm:mb-3 shrink-0">
+              <Compass className="w-4 h-4" />
+            </div>
+            <h3 className="font-serif-display text-sm sm:text-base font-semibold text-[#1E221E] group-hover:text-[#2D4532] transition-colors leading-tight">
+              Get Directions
+            </h3>
+            <p className="text-[11px] sm:text-xs text-[#6B726C] mt-1 line-clamp-1">
+              Hamid Tower, Gulshan-2
+            </p>
+          </a>
         </div>
       </div>
     </section>

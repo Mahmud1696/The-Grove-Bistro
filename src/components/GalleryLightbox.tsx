@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, TouchEvent } from 'react';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { GalleryItem } from '../types';
 
@@ -19,6 +19,8 @@ export function GalleryLightbox({
   onPrev,
   onNext
 }: GalleryLightboxProps) {
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -31,9 +33,40 @@ export function GalleryLightbox({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, onPrev, onNext]);
 
+  // Lock body scroll when open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   if (!isOpen || items.length === 0) return null;
 
   const currentItem = items[currentIndex] || items[0];
+
+  const handleTouchStart = (e: TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        onNext(); // swiped left
+      } else {
+        onPrev(); // swiped right
+      }
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <div
@@ -42,6 +75,8 @@ export function GalleryLightbox({
       role="dialog"
       aria-modal="true"
       aria-label="Gallery Image Viewer"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Top Header with Image Counter & Close */}
       <div className="flex items-center justify-between max-w-6xl mx-auto w-full">
@@ -52,7 +87,7 @@ export function GalleryLightbox({
           id="close-lightbox-btn"
           onClick={onClose}
           aria-label="Close Lightbox"
-          className="p-2 rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
+          className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-white/10 text-white transition-colors cursor-pointer"
         >
           <X className="w-6 h-6" />
         </button>
@@ -65,17 +100,17 @@ export function GalleryLightbox({
           id="lightbox-prev-btn"
           onClick={onPrev}
           aria-label="Previous Image"
-          className="absolute left-2 sm:left-4 z-10 p-3 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs transition-colors cursor-pointer"
+          className="absolute left-2 sm:left-4 z-10 min-w-[48px] min-h-[48px] flex items-center justify-center p-3 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-xs transition-colors cursor-pointer"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
 
         {/* Image Display */}
-        <div className="relative max-h-[75vh] max-w-full overflow-hidden flex flex-col items-center">
+        <div className="relative max-h-[75vh] max-w-full overflow-hidden flex flex-col items-center select-none">
           <img
             src={currentItem.imageUrl}
             alt={currentItem.title}
-            className="max-h-[70vh] w-auto max-w-full object-contain rounded-sm shadow-2xl transition-transform duration-300"
+            className="max-h-[70vh] w-auto max-w-full object-contain rounded-xs shadow-2xl transition-transform duration-300 pointer-events-none"
           />
         </div>
 
@@ -84,7 +119,7 @@ export function GalleryLightbox({
           id="lightbox-next-btn"
           onClick={onNext}
           aria-label="Next Image"
-          className="absolute right-2 sm:right-4 z-10 p-3 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs transition-colors cursor-pointer"
+          className="absolute right-2 sm:right-4 z-10 min-w-[48px] min-h-[48px] flex items-center justify-center p-3 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-xs transition-colors cursor-pointer"
         >
           <ChevronRight className="w-6 h-6" />
         </button>

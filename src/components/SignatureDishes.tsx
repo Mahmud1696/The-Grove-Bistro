@@ -105,7 +105,7 @@ export function SignatureDishes({ dishes, onNavigate }: SignatureDishesProps) {
                     id={`add-order-${dish.id}`}
                     onClick={() => handleAdd(dish)}
                     disabled={!dish.available}
-                    className={`w-full py-3 px-4 rounded-xs text-xs uppercase tracking-[0.18em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                    className={`w-full min-h-[44px] py-3 px-4 rounded-xs text-xs uppercase tracking-[0.18em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                       isJustAdded
                         ? 'bg-[#2D4532] text-white'
                         : 'bg-[#EAE4DA] hover:bg-[#2D4532] text-[#1A1E1B] hover:text-white'

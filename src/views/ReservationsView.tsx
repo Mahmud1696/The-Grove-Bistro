@@ -194,6 +194,34 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
           </p>
         </div>
 
+        {/* Visual Preview Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div className="relative aspect-[16/9] rounded-sm overflow-hidden border border-[#DDD5CA] shadow-2xs group">
+            <img
+              src="/assets/aistudio/745019829_1083828577314941_875227384916130874_n_528e9966.jpg"
+              alt="Terrace Conservatory Window Seating at The Grove"
+              className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+              <span className="text-xs text-white font-medium tracking-wide">
+                Terrace Conservatory & Daylight Dining
+              </span>
+            </div>
+          </div>
+          <div className="relative aspect-[16/9] rounded-sm overflow-hidden border border-[#DDD5CA] shadow-2xs group">
+            <img
+              src="/assets/aistudio/745546055_1083828587314940_1887363832029969781_n_6341a8e4.jpg"
+              alt="Amber-lit Evening Lounge Nook at The Grove"
+              className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+              <span className="text-xs text-white font-medium tracking-wide">
+                Intimate Evening Tables & Amber Lighting
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Reservation Form Container */}
         <div className="bg-white border border-[#E3DDD4] rounded-sm p-6 sm:p-10 shadow-xs">
           <form onSubmit={handleSubmit} className="space-y-8">
@@ -209,7 +237,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                     key={count}
                     type="button"
                     onClick={() => setGuests(count)}
-                    className={`py-3 text-sm font-semibold rounded-xs border transition-all cursor-pointer ${
+                    className={`min-h-[44px] py-2.5 text-sm font-semibold rounded-xs border transition-all cursor-pointer ${
                       guests === count
                         ? 'bg-[#2D4532] text-white border-[#2D4532] shadow-xs'
                         : 'bg-[#FAF8F5] text-[#1A1E1B] border-[#DDD5CA] hover:bg-[#EFEAE2]'
@@ -222,7 +250,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
             </div>
 
             {/* 2. Date & Time Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               <div>
                 <label className="block text-xs uppercase tracking-wider font-semibold text-[#1A1E1B] mb-2 flex items-center gap-2">
                   <CalendarIcon className="w-4 h-4 text-[#2D4532]" />
@@ -235,7 +263,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                   min={today}
                   value={date}
                   onChange={e => setDate(e.target.value)}
-                  className="w-full p-3 bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] cursor-pointer"
+                  className="w-full min-h-[44px] p-3 bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs text-sm sm:text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] cursor-pointer"
                 />
               </div>
 
@@ -247,7 +275,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                 <select
                   value={time}
                   onChange={e => setTime(e.target.value)}
-                  className="w-full p-3 bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] cursor-pointer"
+                  className="w-full min-h-[44px] p-3 bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs text-sm sm:text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] cursor-pointer"
                 >
                   {diningTimes.map(t => (
                     <option key={t} value={t}>
@@ -270,7 +298,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                     key={occ}
                     type="button"
                     onClick={() => setOccasion(occ)}
-                    className={`px-3.5 py-2 text-xs rounded-xs border transition-colors cursor-pointer ${
+                    className={`min-h-[40px] px-3.5 py-2 text-xs font-medium rounded-xs border transition-colors cursor-pointer ${
                       occasion === occ
                         ? 'bg-[#1A1E1B] text-white border-[#1A1E1B]'
                         : 'bg-[#FAF8F5] text-[#555E57] border-[#DDD5CA] hover:bg-[#EFEAE2]'
@@ -296,7 +324,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                     placeholder="Full Name *"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full p-3 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                    className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                   />
                 </div>
                 <div>
@@ -307,7 +335,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                     placeholder="Mobile Number *"
                     value={phone}
                     onChange={e => setPhone(e.target.value)}
-                    className="w-full p-3 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                    className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                   />
                 </div>
                 <div>
@@ -318,7 +346,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                     placeholder="Email Address *"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    className="w-full p-3 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                    className="w-full min-h-[44px] p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                   />
                 </div>
               </div>
@@ -330,7 +358,7 @@ export function ReservationsView({ onNavigate }: ReservationsViewProps) {
                   placeholder="Special requests, dietary preferences, or window seating request (optional)..."
                   value={specialRequest}
                   onChange={e => setSpecialRequest(e.target.value)}
-                  className="w-full p-3 text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
+                  className="w-full p-3 text-sm sm:text-xs bg-[#FAF8F5] border border-[#DDD5CA] rounded-xs focus:outline-none focus:border-[#2D4532]"
                 />
               </div>
             </div>

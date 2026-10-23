@@ -53,7 +53,7 @@ export function Hero({ onNavigate }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-serif-display text-4xl sm:text-6xl md:text-7xl font-normal tracking-tight text-[#FAF8F5] leading-[1.12] mb-6"
+          className="font-serif-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-[#FAF8F5] leading-[1.14] mb-4 sm:mb-6"
         >
           A refined dining experience in Dhaka.
         </motion.h1>
@@ -63,7 +63,7 @@ export function Hero({ onNavigate }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="font-sans-ui text-base sm:text-lg md:text-xl text-[#D6CEBF] font-light max-w-2xl mx-auto leading-relaxed mb-10"
+          className="font-sans-ui text-sm sm:text-lg md:text-xl text-[#D6CEBF] font-light max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 px-2"
         >
           Thoughtfully prepared food, inviting surroundings, and memorable moments — all in one place.
         </motion.p>
@@ -73,12 +73,12 @@ export function Hero({ onNavigate }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-md sm:max-w-none mx-auto"
         >
           <button
             id="hero-order-btn"
             onClick={() => onNavigate('order')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-[#FAF8F5] text-[#1E221E] hover:bg-[#EBE5DF] font-semibold text-xs uppercase tracking-[0.2em] rounded-sm transition-all shadow-md group cursor-pointer"
+            className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 bg-[#FAF8F5] text-[#1E221E] hover:bg-[#EBE5DF] font-semibold text-xs uppercase tracking-[0.2em] rounded-xs transition-all shadow-md group cursor-pointer"
           >
             <Utensils className="w-4 h-4 text-[#2D4532]" />
             <span>Order Online</span>
@@ -88,7 +88,7 @@ export function Hero({ onNavigate }: HeroProps) {
           <button
             id="hero-reserve-btn"
             onClick={() => onNavigate('reservations')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-transparent hover:bg-white/10 text-white font-semibold text-xs uppercase tracking-[0.2em] rounded-sm border border-white/40 hover:border-white transition-all cursor-pointer"
+            className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 bg-transparent hover:bg-white/10 text-white font-semibold text-xs uppercase tracking-[0.2em] rounded-xs border border-white/40 hover:border-white transition-all cursor-pointer"
           >
             <Calendar className="w-4 h-4 text-[#A3B899]" />
             <span>Reserve a Table</span>
@@ -104,7 +104,7 @@ export function Hero({ onNavigate }: HeroProps) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
         aria-label="Scroll to explore quick actions and menu"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-white/70 hover:text-white transition-colors cursor-pointer group focus:outline-none"
+        className="hidden sm:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 text-white/70 hover:text-white transition-colors cursor-pointer group focus:outline-none"
       >
         <span className="text-[10px] uppercase tracking-[0.25em] font-medium font-sans-ui">
           Scroll to explore

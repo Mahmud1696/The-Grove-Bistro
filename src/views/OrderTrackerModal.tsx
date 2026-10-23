@@ -15,6 +15,29 @@ export function OrderTrackerModal({ orderId, isOpen, onClose }: OrderTrackerModa
   const [activeSearchId, setActiveSearchId] = useState<string | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
+  // Lock body scroll when tracker modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  // Handle escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   // Resolve target order: specific searched/prop ID first, otherwise latest order
@@ -220,8 +243,8 @@ export function OrderTrackerModal({ orderId, isOpen, onClose }: OrderTrackerModa
               </div>
 
               {/* Progress Stepper */}
-              <div className="py-4">
-                <div className="relative flex justify-between items-center">
+              <div className="py-4 overflow-x-auto scrollbar-none">
+                <div className="relative flex justify-between items-center min-w-[340px] sm:min-w-0">
                   {/* Progress Line */}
                   <div className="absolute left-6 right-6 top-5 h-0.5 bg-[#E2DBD1] -z-0" />
                   <div

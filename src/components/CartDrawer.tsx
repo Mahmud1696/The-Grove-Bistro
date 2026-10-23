@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -17,6 +18,29 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
     subtotal
   } = useCart();
 
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isCartOpen]);
+
+  // Close on Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isCartOpen) {
+        closeCart();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isCartOpen, closeCart]);
+
   if (!isCartOpen) return null;
 
   return (
@@ -30,13 +54,13 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
       {/* Backdrop */}
       <div
         onClick={closeCart}
-        className="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity duration-300"
+        className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-[#FAF8F5] text-[#1E221E] shadow-2xl flex flex-col border-l border-[#E6E0D6]">
           {/* Header */}
-          <div className="p-6 border-b border-[#EAE4DC] flex items-center justify-between">
+          <div className="p-5 sm:p-6 border-b border-[#EAE4DC] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <ShoppingBag className="w-5 h-5 text-[#2D4532]" />
               <h2 className="font-serif-display text-xl font-semibold text-[#1A1E1B]">
@@ -50,7 +74,7 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
               id="close-cart-btn"
               onClick={closeCart}
               aria-label="Close cart drawer"
-              className="p-1.5 rounded-full text-[#6F7770] hover:text-[#1A1E1B] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-[#6F7770] hover:text-[#1A1E1B] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -108,23 +132,23 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
                       </p>
 
                       <div className="flex items-center justify-between mt-3">
-                        <div className="inline-flex items-center border border-[#DDD5CA] rounded-sm bg-[#FAF8F5]">
+                        <div className="inline-flex items-center border border-[#DDD5CA] rounded-xs bg-[#FAF8F5]">
                           <button
                             onClick={() => updateQuantity(ci.item.id, -1)}
                             aria-label="Decrease quantity"
-                            className="p-1 px-2 text-[#4C534D] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
+                            className="min-w-[34px] min-h-[34px] flex items-center justify-center text-[#4C534D] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
                           >
-                            <Minus className="w-3 h-3" />
+                            <Minus className="w-3.5 h-3.5" />
                           </button>
-                          <span className="px-2 text-xs font-semibold text-[#1A1E1B]">
+                          <span className="px-3 text-xs font-semibold text-[#1A1E1B]">
                             {ci.quantity}
                           </span>
                           <button
                             onClick={() => updateQuantity(ci.item.id, 1)}
                             aria-label="Increase quantity"
-                            className="p-1 px-2 text-[#4C534D] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
+                            className="min-w-[34px] min-h-[34px] flex items-center justify-center text-[#4C534D] hover:bg-[#EFEAE2] transition-colors cursor-pointer"
                           >
-                            <Plus className="w-3 h-3" />
+                            <Plus className="w-3.5 h-3.5" />
                           </button>
                         </div>
 
@@ -139,9 +163,9 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
             )}
           </div>
 
-          {/* Footer / Summary */}
+          {/* Footer / Summary with Safe Area */}
           {cart.length > 0 && (
-            <div className="p-6 bg-[#F5F1EB] border-t border-[#E6E0D6] space-y-4">
+            <div className="p-5 sm:p-6 pb-[calc(env(safe-area-inset-bottom,0px)+1.5rem)] bg-[#F5F1EB] border-t border-[#E6E0D6] space-y-4">
               <div className="space-y-2 text-xs text-[#5F6660]">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
@@ -163,7 +187,7 @@ export function CartDrawer({ onProceedToCheckout, onExploreMenu }: CartDrawerPro
                   closeCart();
                   onProceedToCheckout();
                 }}
-                className="w-full py-4 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                className="w-full min-h-[48px] py-3.5 sm:py-4 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-[0.2em] font-semibold rounded-xs transition-all duration-200 flex items-center justify-center gap-2 shadow-sm cursor-pointer"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />

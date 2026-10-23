@@ -158,7 +158,7 @@ export function HomeCategoryShowcases({ onNavigate }: HomeCategoryShowcasesProps
                             <button
                               id={`home-cat-add-${dish.id}`}
                               onClick={() => handleAdd(dish)}
-                              className={`w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                              className={`w-full min-h-[44px] py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                                 isJustAdded
                                   ? 'bg-[#2D4532] text-white'
                                   : 'bg-[#FAF8F5] hover:bg-[#2D4532] border border-[#DDD5CA] hover:border-[#2D4532] text-[#1A1E1B] hover:text-white'

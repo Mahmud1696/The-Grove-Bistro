@@ -74,22 +74,23 @@ export function MenuView({ onNavigate }: MenuViewProps) {
       <div className="sticky top-20 z-30 bg-[#FAF8F5]/95 backdrop-blur-md border-y border-[#E6E0D6] py-4 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           {/* Top Row: Search Input & Dietary Toggles */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative w-full sm:w-96">
-              <Search className="w-4 h-4 absolute left-3.5 top-3 text-[#7E8880]" />
+              <Search className="w-4 h-4 absolute left-3.5 top-3.5 text-[#7E8880] pointer-events-none" />
               <input
                 id="menu-search-input"
                 type="text"
                 placeholder="Search our menu (e.g. Truffle, Sea Bass, Ribs)..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#DDD5CA] rounded-sm text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] shadow-2xs placeholder:text-[#9A9F9B]"
+                className="w-full pl-10 pr-10 py-2.5 min-h-[44px] bg-white border border-[#DDD5CA] rounded-xs text-sm sm:text-xs text-[#1A1E1B] focus:outline-none focus:border-[#2D4532] shadow-2xs placeholder:text-[#9A9F9B]"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-2.5 text-xs text-[#8A928B] hover:text-[#1A1E1B]"
+                  aria-label="Clear search"
+                  className="absolute right-1 top-1 w-9 h-9 flex items-center justify-center text-xs text-[#8A928B] hover:text-[#1A1E1B] cursor-pointer"
                 >
                   Clear
                 </button>
@@ -98,14 +99,14 @@ export function MenuView({ onNavigate }: MenuViewProps) {
 
             {/* Quick Dietary Filters */}
             <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-              <span className="text-xs text-[#7E8880] flex items-center gap-1 shrink-0 mr-1">
+              <span className="text-xs text-[#7E8880] flex items-center gap-1 shrink-0 mr-1 font-medium">
                 <Filter className="w-3.5 h-3.5" /> Filter:
               </span>
               <button
                 onClick={() => setDietaryFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-colors shrink-0 ${
+                className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-colors shrink-0 ${
                   dietaryFilter === 'all'
-                    ? 'bg-[#2D4532] text-white'
+                    ? 'bg-[#2D4532] text-white shadow-xs'
                     : 'bg-[#EFEAE2] text-[#4F5751] hover:bg-[#E4DDD3]'
                 }`}
               >
@@ -113,9 +114,9 @@ export function MenuView({ onNavigate }: MenuViewProps) {
               </button>
               <button
                 onClick={() => setDietaryFilter('vegetarian')}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-colors shrink-0 ${
+                className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-colors shrink-0 ${
                   dietaryFilter === 'vegetarian'
-                    ? 'bg-[#2D4532] text-white'
+                    ? 'bg-[#2D4532] text-white shadow-xs'
                     : 'bg-[#EFEAE2] text-[#4F5751] hover:bg-[#E4DDD3]'
                 }`}
               >
@@ -123,9 +124,9 @@ export function MenuView({ onNavigate }: MenuViewProps) {
               </button>
               <button
                 onClick={() => setDietaryFilter('popular')}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-colors shrink-0 ${
+                className={`min-h-[36px] px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition-colors shrink-0 ${
                   dietaryFilter === 'popular'
-                    ? 'bg-[#2D4532] text-white'
+                    ? 'bg-[#2D4532] text-white shadow-xs'
                     : 'bg-[#EFEAE2] text-[#4F5751] hover:bg-[#E4DDD3]'
                 }`}
               >
@@ -135,7 +136,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
           </div>
 
           {/* Bottom Row: Horizontal Scrollable Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
             {allCategories.map(cat => {
               const isSelected = selectedCategory === cat.slug;
               return (
@@ -143,10 +144,10 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                   key={cat.id}
                   id={`cat-btn-${cat.slug}`}
                   onClick={() => setSelectedCategory(cat.slug)}
-                  className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold whitespace-nowrap rounded-xs transition-all duration-150 cursor-pointer ${
+                  className={`min-h-[40px] px-4 py-2 text-xs uppercase tracking-wider font-semibold whitespace-nowrap rounded-xs transition-all duration-150 cursor-pointer ${
                     isSelected
                       ? 'bg-[#1A1E1B] text-white shadow-xs'
-                      : 'bg-[#FAF8F5] hover:bg-[#EFEAE2] text-[#555E57]'
+                      : 'bg-[#FAF8F5] hover:bg-[#EFEAE2] text-[#555E57] border border-[#E3DDD4]'
                   }`}
                 >
                   {cat.name}
@@ -253,7 +254,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                       {dish.available === false ? (
                         <button
                           disabled
-                          className="w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed text-center"
+                          className="w-full min-h-[44px] py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed text-center"
                         >
                           Temporarily Unavailable
                         </button>
@@ -261,7 +262,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                         <button
                           id={`menu-add-${dish.id}`}
                           onClick={() => handleAdd(dish)}
-                          className={`w-full py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
+                          className={`w-full min-h-[44px] py-2.5 px-4 rounded-xs text-xs uppercase tracking-[0.16em] font-semibold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer ${
                             isJustAdded
                               ? 'bg-[#2D4532] text-white'
                               : 'bg-[#FAF8F5] hover:bg-[#2D4532] border border-[#DDD5CA] hover:border-[#2D4532] text-[#1A1E1B] hover:text-white'

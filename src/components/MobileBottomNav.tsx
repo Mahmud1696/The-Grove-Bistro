@@ -27,46 +27,53 @@ export function MobileBottomNav({ currentView, onNavigate }: MobileBottomNavProp
     <nav
       id="mobile-bottom-navigation"
       aria-label="Mobile primary navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#E6DFD5] px-2 py-1.5 shadow-[0_-4px_16px_rgba(0,0,0,0.04)]"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-t border-[#E6DFD5] px-2 pt-1 pb-[calc(env(safe-area-inset-bottom,0px)+0.35rem)] shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
     >
-      <div className="flex items-center justify-around">
+      <div className="flex items-center justify-around max-w-lg mx-auto">
         <button
           id="mob-nav-home"
           onClick={() => handleNav('home')}
-          className={`flex flex-col items-center py-1 px-2.5 transition-colors cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[52px] min-h-[48px] py-1 px-2 rounded-xs transition-colors cursor-pointer ${
             currentView === 'home' ? 'text-[#2D4532]' : 'text-[#6F7770] hover:text-[#1E221E]'
           }`}
         >
-          <Home className="w-5 h-5 mb-0.5" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">Home</span>
+          <Home className={`w-5 h-5 mb-0.5 transition-transform ${currentView === 'home' ? 'scale-110' : ''}`} />
+          <span className={`text-[10px] uppercase tracking-wider ${currentView === 'home' ? 'font-bold' : 'font-medium'}`}>
+            Home
+          </span>
         </button>
 
         <button
           id="mob-nav-menu"
           onClick={() => handleNav('menu')}
-          className={`flex flex-col items-center py-1 px-2.5 transition-colors cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[52px] min-h-[48px] py-1 px-2 rounded-xs transition-colors cursor-pointer ${
             currentView === 'menu' ? 'text-[#2D4532]' : 'text-[#6F7770] hover:text-[#1E221E]'
           }`}
         >
-          <Utensils className="w-5 h-5 mb-0.5" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">Menu</span>
+          <Utensils className={`w-5 h-5 mb-0.5 transition-transform ${currentView === 'menu' ? 'scale-110' : ''}`} />
+          <span className={`text-[10px] uppercase tracking-wider ${currentView === 'menu' ? 'font-bold' : 'font-medium'}`}>
+            Menu
+          </span>
         </button>
 
-        {/* ORDER - visually emphasized */}
+        {/* ORDER - visually emphasized floating center button */}
         <button
           id="mob-nav-order"
           onClick={handleOrderNav}
-          className="flex flex-col items-center -mt-4 cursor-pointer focus:outline-none"
+          aria-label={`Order Online with ${itemCount} items`}
+          className="flex flex-col items-center -mt-4 cursor-pointer focus:outline-none min-w-[54px]"
         >
-          <div className="relative w-12 h-12 rounded-full bg-[#2D4532] text-white flex items-center justify-center shadow-md hover:bg-[#233727] transition-transform active:scale-95">
+          <div className="relative w-12 h-12 rounded-full bg-[#2D4532] text-white flex items-center justify-center shadow-lg hover:bg-[#233727] transition-all active:scale-95 border-2 border-[#FAF8F5]">
             <ShoppingBag className="w-5 h-5" />
             {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
+              <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white">
                 {itemCount}
               </span>
             )}
           </div>
-          <span className="text-[10px] uppercase tracking-wider font-semibold text-[#2D4532] mt-0.5">
+          <span className={`text-[10px] uppercase tracking-wider mt-0.5 ${
+            currentView === 'order' || currentView === 'checkout' ? 'font-bold text-[#2D4532]' : 'font-semibold text-[#2D4532]'
+          }`}>
             Order
           </span>
         </button>
@@ -74,25 +81,33 @@ export function MobileBottomNav({ currentView, onNavigate }: MobileBottomNavProp
         <button
           id="mob-nav-reserve"
           onClick={() => handleNav('reservations')}
-          className={`flex flex-col items-center py-1 px-2.5 transition-colors cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[52px] min-h-[48px] py-1 px-2 rounded-xs transition-colors cursor-pointer ${
             currentView === 'reservations' ? 'text-[#2D4532]' : 'text-[#6F7770] hover:text-[#1E221E]'
           }`}
         >
-          <Calendar className="w-5 h-5 mb-0.5" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">Reserve</span>
+          <Calendar className={`w-5 h-5 mb-0.5 transition-transform ${currentView === 'reservations' ? 'scale-110' : ''}`} />
+          <span className={`text-[10px] uppercase tracking-wider ${currentView === 'reservations' ? 'font-bold' : 'font-medium'}`}>
+            Reserve
+          </span>
         </button>
 
         <button
           id="mob-nav-more"
           onClick={() => handleNav('contact')}
-          className={`flex flex-col items-center py-1 px-2.5 transition-colors cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[52px] min-h-[48px] py-1 px-2 rounded-xs transition-colors cursor-pointer ${
             currentView === 'contact' || currentView === 'about' || currentView === 'gallery'
               ? 'text-[#2D4532]'
               : 'text-[#6F7770] hover:text-[#1E221E]'
           }`}
         >
-          <Compass className="w-5 h-5 mb-0.5" />
-          <span className="text-[10px] uppercase tracking-wider font-medium">Contact</span>
+          <Compass className={`w-5 h-5 mb-0.5 transition-transform ${
+            currentView === 'contact' || currentView === 'about' || currentView === 'gallery' ? 'scale-110' : ''
+          }`} />
+          <span className={`text-[10px] uppercase tracking-wider ${
+            currentView === 'contact' || currentView === 'about' || currentView === 'gallery' ? 'font-bold' : 'font-medium'
+          }`}>
+            Contact
+          </span>
         </button>
       </div>
     </nav>

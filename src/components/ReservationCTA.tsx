@@ -10,8 +10,8 @@ export function ReservationCTA({ onNavigate }: ReservationCTAProps) {
       {/* Background Image with Warm Moody Dark Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=2000&q=80"
-          alt="Warm dining room setting at The Grove Bistro"
+          src="/assets/aistudio/745546055_1083828587314940_1887363832029969781_n_6341a8e4.jpg"
+          alt="Warm dining room setting and amber lounge table at The Grove Bistro"
           className="w-full h-full object-cover object-center"
           loading="lazy"
         />

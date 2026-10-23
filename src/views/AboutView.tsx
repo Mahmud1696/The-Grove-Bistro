@@ -25,7 +25,7 @@ export function AboutView({ onNavigate }: AboutViewProps) {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="relative aspect-[21/9] rounded-sm overflow-hidden bg-[#E5DFD4] shadow-sm">
           <img
-            src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1600&q=80"
+            src="/assets/aistudio/745019829_1083828577314941_875227384916130874_n_528e9966.jpg"
             alt="Interior of The Grove Bistro at Hamid Tower Gulshan"
             className="w-full h-full object-cover object-center"
             loading="lazy"
@@ -38,7 +38,7 @@ export function AboutView({ onNavigate }: AboutViewProps) {
       </div>
 
       {/* Story Text 2-Column Split */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 items-start">
           <div>
             <h2 className="font-serif-display text-2xl sm:text-3xl font-medium text-[#1A1E1B] mb-6 leading-snug">
@@ -59,7 +59,7 @@ export function AboutView({ onNavigate }: AboutViewProps) {
                 <span>Culinary Ethos</span>
               </div>
               <p className="text-xs sm:text-sm text-[#666F67] leading-relaxed font-light">
-                From 48-hour slow-cooked beef ribs to handmade agnolotti and fresh Bay seafood, we avoid culinary shortcuts. Every sauce and stock is made in-house daily.
+                From charcoal-grilled prime steaks and 48-hour slow-cooked short ribs to handmade pasta and artisanal roasts, we avoid culinary shortcuts. Every plate is crafted with intention.
               </p>
             </div>
 
@@ -70,6 +70,77 @@ export function AboutView({ onNavigate }: AboutViewProps) {
               </div>
               <p className="text-xs sm:text-sm text-[#666F67] leading-relaxed font-light">
                 Whether celebrating milestone anniversaries, hosting a business luncheon, or sharing weekend brunch with loved ones, our service is attentive yet respectfully discreet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3 Authentic Photo Vignettes */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="group rounded-sm overflow-hidden bg-[#E5DFD4] border border-[#DDD5CA] shadow-2xs">
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src="/assets/aistudio/714930613_1045228344508298_5916473412862540533_n_2dddfe3d.jpg"
+                alt="Charcoal Grilled Steak & Citrus Pairing at The Grove"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white">
+              <span className="text-[10px] uppercase tracking-wider text-[#2D4532] font-semibold block mb-1">
+                Culinary Perfection
+              </span>
+              <h4 className="font-serif-display text-sm font-semibold text-[#1A1E1B]">
+                Prime Steaks & Citrus Coolers
+              </h4>
+              <p className="text-xs text-[#6F7770] font-light mt-1">
+                Charcoal-seared tenderloin with whipped mousseline and handcrafted refreshments.
+              </p>
+            </div>
+          </div>
+
+          <div className="group rounded-sm overflow-hidden bg-[#E5DFD4] border border-[#DDD5CA] shadow-2xs">
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src="/assets/aistudio/745546055_1083828587314940_1887363832029969781_n_6341a8e4.jpg"
+                alt="Cozy Amber Lounge and Floor Lamp at The Grove"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white">
+              <span className="text-[10px] uppercase tracking-wider text-[#2D4532] font-semibold block mb-1">
+                Atmosphere & Space
+              </span>
+              <h4 className="font-serif-display text-sm font-semibold text-[#1A1E1B]">
+                Amber Nooks & Velvet Armchairs
+              </h4>
+              <p className="text-xs text-[#6F7770] font-light mt-1">
+                Intimate dining settings designed for quiet conversation and memorable celebrations.
+              </p>
+            </div>
+          </div>
+
+          <div className="group rounded-sm overflow-hidden bg-[#E5DFD4] border border-[#DDD5CA] shadow-2xs">
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src="/assets/aistudio/747753191_1083828523981613_1738728827763148336_n_99727991.jpg"
+                alt="The Grove Artisan Coffee Cup on Level 12"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 bg-white">
+              <span className="text-[10px] uppercase tracking-wider text-[#2D4532] font-semibold block mb-1">
+                Cafe Culture
+              </span>
+              <h4 className="font-serif-display text-sm font-semibold text-[#1A1E1B]">
+                Specialty Roast & Botanical Cups
+              </h4>
+              <p className="text-xs text-[#6F7770] font-light mt-1">
+                Single-origin roasts, silky micro-foam lattes, and peaceful daylight work hours.
               </p>
             </div>
           </div>

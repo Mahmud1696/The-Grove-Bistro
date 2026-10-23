@@ -40,17 +40,17 @@ export function GalleryView({ onOpenLightbox, onNavigate }: GalleryViewProps) {
 
       {/* Category Filter Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex items-center sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
           {categories.map(cat => {
             const isSelected = selectedCategory === cat.value;
             return (
               <button
                 key={cat.value}
                 onClick={() => setSelectedCategory(cat.value)}
-                className={`px-5 py-2.5 text-xs uppercase tracking-wider font-semibold rounded-xs transition-all cursor-pointer ${
+                className={`min-h-[40px] px-4 sm:px-5 py-2.5 text-xs uppercase tracking-wider font-semibold rounded-xs transition-all cursor-pointer whitespace-nowrap ${
                   isSelected
                     ? 'bg-[#1A1E1B] text-white shadow-xs'
-                    : 'bg-[#F3EFE9] hover:bg-[#EAE4DC] text-[#555E57]'
+                    : 'bg-[#F3EFE9] hover:bg-[#EAE4DC] text-[#555E57] border border-[#DDD5CA]'
                 }`}
               >
                 {cat.label}

@@ -96,7 +96,7 @@ export default function App() {
       <CartProvider>
         <OrderProvider>
           <ReservationProvider>
-            <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1A1E1B] selection:bg-[#2D4532] selection:text-white">
+            <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#1A1E1B] selection:bg-[#2D4532] selection:text-white overflow-x-hidden w-full relative">
             {/* Main Sticky Header */}
             <Header 
               currentView={currentView} 
@@ -105,7 +105,7 @@ export default function App() {
             />
 
             {/* View Switching */}
-            <main className="flex-1">
+            <main className="flex-1 pb-16 md:pb-0">
               {currentView === 'home' && (
                 <HomeView onNavigate={navigateTo} onOpenLightbox={handleOpenLightbox} />
               )}

@@ -256,9 +256,9 @@ export const INITIAL_MENU_ITEMS: MenuItem[] = [
     id: 'dish-16',
     name: 'Charcoal Grilled Sirloin Steak',
     category: 'steaks',
-    description: '280g dry-aged Australian grain-fed sirloin, grilled to your preference. Served with truffle mash, roasted asparagus, and peppercorn jus.',
+    description: '280g prime tender cut grilled over charcoal embers, served with creamy potato mousseline, blistered garden vegetables, and herb peppercorn jus.',
     price: 2450,
-    image: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/aistudio/714930613_1045228344508298_5916473412862540533_n_2dddfe3d.jpg',
     available: true,
     featured: true,
     popular: true,
@@ -326,13 +326,13 @@ export const INITIAL_MENU_ITEMS: MenuItem[] = [
   // Beverages & Coffee
   {
     id: 'dish-21',
-    name: 'The Grove Signature Iced Latte',
+    name: 'The Grove Signature Specialty Roast & Latte',
     category: 'beverages',
-    description: 'Double shot of single-origin Colombian espresso poured over cold silky oat milk and infused with Madagascar vanilla bean.',
+    description: 'Double shot of single-origin Colombian espresso poured over cold silky oat milk and infused with Madagascar vanilla bean, served in our illustrated botanical cup.',
     price: 390,
-    image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/aistudio/747753191_1083828523981613_1738728827763148336_n_99727991.jpg',
     available: true,
-    featured: false,
+    featured: true,
     vegetarian: true,
     popular: true,
     prepTimeMinutes: 5,
@@ -355,6 +355,34 @@ export const INITIAL_MENU_ITEMS: MenuItem[] = [
 ];
 
 export const GALLERY_ITEMS: GalleryItem[] = [
+  {
+    id: 'gal-grove-steak',
+    title: 'Charcoal Grilled Sirloin & Citrus Mocktail',
+    category: 'FOOD',
+    imageUrl: '/assets/aistudio/714930613_1045228344508298_5916473412862540533_n_2dddfe3d.jpg',
+    caption: 'Prime steak seared over open fire with whipped potato mousseline, sauteed garden vegetables, and fresh orange cooler.'
+  },
+  {
+    id: 'gal-grove-terrace',
+    title: 'Sunlit Dining Hall & Greenery Vistas',
+    category: 'INTERIOR',
+    imageUrl: '/assets/aistudio/745019829_1083828577314941_875227384916130874_n_528e9966.jpg',
+    caption: 'Grand dining tables framed by expansive floor-to-ceiling glass windows and lush garden greenery on Level 12, Hamid Tower.'
+  },
+  {
+    id: 'gal-grove-lounge',
+    title: 'Amber Nook & Bistro Seating',
+    category: 'AMBIENCE',
+    imageUrl: '/assets/aistudio/745546055_1083828587314940_1887363832029969781_n_6341a8e4.jpg',
+    caption: 'Intimate dining corner with plush velvet armchairs, vintage floor lamp, and European bistronomy atmosphere.'
+  },
+  {
+    id: 'gal-grove-coffee',
+    title: 'The Grove Artisan Roast & Botanical Cup',
+    category: 'FOOD',
+    imageUrl: '/assets/aistudio/747753191_1083828523981613_1738728827763148336_n_99727991.jpg',
+    caption: 'Specialty hot coffee poured into custom botanical painted cups for relaxed cafe moments and work sessions.'
+  },
   {
     id: 'gal-1',
     title: 'Warm Dining Atmosphere',

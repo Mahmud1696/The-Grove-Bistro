@@ -1,23 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { TESTIMONIALS, RESTAURANT_INFO } from '../data/restaurantData';
 
 export function ReviewsSection() {
   const [startIndex, setStartIndex] = useState(0);
-
-  // Responsive items per page view
-  const pageSize = 3;
+  const [pageSize, setPageSize] = useState(3);
   const totalReviews = TESTIMONIALS.length;
 
+  useEffect(() => {
+    const updatePageSize = () => {
+      if (window.innerWidth < 640) {
+        setPageSize(1);
+      } else if (window.innerWidth < 1024) {
+        setPageSize(2);
+      } else {
+        setPageSize(3);
+      }
+    };
+    updatePageSize();
+    window.addEventListener('resize', updatePageSize, { passive: true });
+    return () => window.removeEventListener('resize', updatePageSize);
+  }, []);
+
   const prev = () => {
-    setStartIndex(prev => (prev === 0 ? Math.max(0, totalReviews - pageSize) : prev - 1));
+    setStartIndex(prev => (prev === 0 ? Math.max(0, totalReviews - pageSize) : Math.max(0, prev - 1)));
   };
 
   const next = () => {
     setStartIndex(prev => (prev + pageSize >= totalReviews ? 0 : prev + 1));
   };
 
-  // Slice visible reviews for desktop, wrap around if needed
+  // Slice visible reviews, wrap around if needed
   const visibleReviews = TESTIMONIALS.slice(startIndex, startIndex + pageSize);
   if (visibleReviews.length < pageSize && totalReviews >= pageSize) {
     visibleReviews.push(...TESTIMONIALS.slice(0, pageSize - visibleReviews.length));
@@ -26,13 +39,13 @@ export function ReviewsSection() {
   const googleMapsUrl = RESTAURANT_INFO.googleMapsUrl;
 
   return (
-    <section id="reviews-section" className="py-20 sm:py-28 bg-[#FAF8F5] border-t border-[#EAE4DB]">
+    <section id="reviews-section" className="py-16 sm:py-24 lg:py-28 bg-[#FAF8F5] border-t border-[#EAE4DB]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 gap-6">
           <div>
             {/* Google Maps Authenticity Header Badge */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-white border border-[#DDD5CA] shadow-2xs text-[11px] font-semibold text-[#1B3B2B]">
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -58,24 +71,24 @@ export function ReviewsSection() {
           </div>
 
           {/* Action buttons & carousel navigation */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center justify-between sm:justify-start gap-3 shrink-0">
             <a
               id="view-all-google-reviews-btn"
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-[#F3EFE9] border border-[#2D4532] text-[#2D4532] text-xs uppercase tracking-wider font-semibold rounded-xs transition-colors cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2.5 bg-white hover:bg-[#F3EFE9] border border-[#2D4532] text-[#2D4532] text-xs uppercase tracking-wider font-semibold rounded-xs transition-colors cursor-pointer shadow-2xs min-h-[44px]"
             >
               <span>Read on Google Maps</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <button
                 id="review-prev-btn"
                 onClick={prev}
                 aria-label="Previous review"
-                className="w-9 h-9 rounded-xs border border-[#D9D2C7] bg-white flex items-center justify-center hover:bg-[#EFEAE2] text-[#1A1E1B] transition-colors cursor-pointer shadow-2xs"
+                className="w-11 h-11 rounded-xs border border-[#D9D2C7] bg-white flex items-center justify-center hover:bg-[#EFEAE2] text-[#1A1E1B] transition-colors cursor-pointer shadow-2xs"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -83,7 +96,7 @@ export function ReviewsSection() {
                 id="review-next-btn"
                 onClick={next}
                 aria-label="Next review"
-                className="w-9 h-9 rounded-xs border border-[#D9D2C7] bg-white flex items-center justify-center hover:bg-[#EFEAE2] text-[#1A1E1B] transition-colors cursor-pointer shadow-2xs"
+                className="w-11 h-11 rounded-xs border border-[#D9D2C7] bg-white flex items-center justify-center hover:bg-[#EFEAE2] text-[#1A1E1B] transition-colors cursor-pointer shadow-2xs"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -165,9 +178,28 @@ export function ReviewsSection() {
           ))}
         </div>
 
+        {/* Carousel Pagination Dots */}
+        <div className="flex items-center justify-center gap-2 mt-8">
+          {Array.from({ length: Math.ceil(totalReviews / pageSize) }).map((_, dotIdx) => {
+            const isActive = Math.floor(startIndex / pageSize) === dotIdx;
+            return (
+              <button
+                key={dotIdx}
+                onClick={() => setStartIndex(dotIdx * pageSize)}
+                aria-label={`Go to reviews page ${dotIdx + 1}`}
+                className={`transition-all cursor-pointer rounded-full ${
+                  isActive
+                    ? 'w-6 h-2 bg-[#2D4532]'
+                    : 'w-2 h-2 bg-[#D8D0C5] hover:bg-[#A89F94]'
+                }`}
+              />
+            );
+          })}
+        </div>
+
         {/* Bottom Banner with Direct Google Link */}
-        <div className="mt-12 p-6 sm:p-8 bg-[#F4EFE8] rounded-sm border border-[#E3DDD4] flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div className="flex items-center gap-4">
+        <div className="mt-10 sm:mt-12 p-6 sm:p-8 bg-[#F4EFE8] rounded-sm border border-[#E3DDD4] flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-white border border-[#DDD5CA] shadow-2xs flex items-center justify-center shrink-0">
               <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -191,7 +223,7 @@ export function ReviewsSection() {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors shadow-2xs"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#2D4532] hover:bg-[#223626] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors shadow-2xs min-h-[44px]"
           >
             <span>Write a Google Review</span>
             <ExternalLink className="w-3.5 h-3.5" />
