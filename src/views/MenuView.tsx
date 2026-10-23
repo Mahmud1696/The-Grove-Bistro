@@ -10,11 +10,16 @@ interface MenuViewProps {
 }
 
 export function MenuView({ onNavigate }: MenuViewProps) {
-  const { menuItems } = useMenu();
+  const { menuItems, categories } = useMenu();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [dietaryFilter, setDietaryFilter] = useState<'all' | 'vegetarian' | 'popular'>('all');
   const [addedDishId, setAddedDishId] = useState<string | null>(null);
+
+  const allCategories = useMemo(() => [
+    { id: 'all', name: 'All Dishes', slug: 'all' },
+    ...categories
+  ], [categories]);
 
   const { addItem, openCart } = useCart();
 
@@ -28,7 +33,9 @@ export function MenuView({ onNavigate }: MenuViewProps) {
     return menuItems.filter(dish => {
       // Category check
       const matchesCategory =
-        selectedCategory === 'all' || dish.category === selectedCategory;
+        selectedCategory === 'all' ||
+        dish.category === selectedCategory ||
+        allCategories.find(c => (c.slug === selectedCategory || c.id === selectedCategory))?.id === dish.category;
 
       // Dietary check
       const matchesDietary =
@@ -129,7 +136,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
 
           {/* Bottom Row: Horizontal Scrollable Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
-            {MENU_CATEGORIES.map(cat => {
+            {allCategories.map(cat => {
               const isSelected = selectedCategory === cat.slug;
               return (
                 <button
@@ -198,7 +205,7 @@ export function MenuView({ onNavigate }: MenuViewProps) {
                       className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-500 ease-out"
                     />
                     <div className="absolute top-3 left-3 bg-[#1A1E1B]/80 backdrop-blur-xs text-[#FAF8F5] text-[10px] uppercase tracking-widest font-semibold px-2.5 py-1 rounded-xs">
-                      {MENU_CATEGORIES.find(c => c.id === dish.category)?.name || dish.category.replace('-', ' ')}
+                      {allCategories.find(c => c.id === dish.category)?.name || dish.category.replace('-', ' ')}
                     </div>
                     {dish.popular && (
                       <div className="absolute top-3 right-3 bg-amber-700/90 text-white text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-xs flex items-center gap-1">

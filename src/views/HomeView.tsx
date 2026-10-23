@@ -2,6 +2,7 @@ import { Hero } from '../components/Hero';
 import { QuickActionBar } from '../components/QuickActionBar';
 import { AboutSection } from '../components/AboutSection';
 import { SignatureDishes } from '../components/SignatureDishes';
+import { HomeCategoryShowcases } from '../components/HomeCategoryShowcases';
 import { ExperienceSection } from '../components/ExperienceSection';
 import { ReservationCTA } from '../components/ReservationCTA';
 import { ReviewsSection } from '../components/ReviewsSection';
@@ -31,8 +32,11 @@ export function HomeView({ onNavigate, onOpenLightbox }: HomeViewProps) {
       {/* 4. About / Introduction */}
       <AboutSection onNavigate={onNavigate} />
 
-      {/* 5. Featured Dishes */}
+      {/* 5. Featured Dishes (Dishes marked with Add to Home) */}
       <SignatureDishes dishes={menuItems} onNavigate={onNavigate} />
+
+      {/* 5.5. Categories added to Home Page */}
+      <HomeCategoryShowcases onNavigate={onNavigate} />
 
       {/* 6. Restaurant Experience / Atmosphere */}
       <ExperienceSection />

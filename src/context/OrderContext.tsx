@@ -297,8 +297,12 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     total: number;
     paymentMethod: PaymentMethod;
   }): Order => {
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const orderId = `GV-${randomNum}`;
+    // Ensure unique orderId for every individual order
+    let orderId = `GV-${Math.floor(1000 + Math.random() * 9000)}`;
+    let counter = 1;
+    while (orders.some(o => o.orderId.toLowerCase() === orderId.toLowerCase())) {
+      orderId = `GV-${Math.floor(1000 + Math.random() * 9000)}-${counter++}`;
+    }
 
     const newOrder: Order = {
       orderId,
@@ -329,15 +333,17 @@ export function OrderProvider({ children }: { children: ReactNode }) {
 
   const updateOrderStatus = (orderId: string, status: OrderStatus) => {
     setOrders(prev =>
-      prev.map(o => (o.orderId === orderId ? { ...o, orderStatus: status } : o))
+      prev.map(o => (o.orderId.toLowerCase() === orderId.toLowerCase() ? { ...o, orderStatus: status } : o))
     );
-    if (activeOrder && activeOrder.orderId === orderId) {
+    if (activeOrder && activeOrder.orderId.toLowerCase() === orderId.toLowerCase()) {
       setActiveOrder(prev => (prev ? { ...prev, orderStatus: status } : null));
     }
   };
 
   const getOrderById = (orderId: string) => {
-    return orders.find(o => o.orderId === orderId);
+    if (!orderId) return undefined;
+    const clean = orderId.toLowerCase().trim();
+    return orders.find(o => o.orderId.toLowerCase().trim() === clean);
   };
 
   return (

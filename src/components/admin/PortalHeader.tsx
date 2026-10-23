@@ -69,6 +69,8 @@ export function PortalHeader({
         return { title: 'Kitchen Display System (KDS)', breadcrumb: 'Live Dispatch' };
       case 'dishes':
         return { title: 'Dishes & Menu Engineering', breadcrumb: 'Catalog / Menu' };
+      case 'categories':
+        return { title: 'Categories & Homepage Showcase', breadcrumb: 'Catalog / Categories' };
       case 'bookings':
         return { title: 'Table Reservations & Seating', breadcrumb: 'Front of House' };
       case 'customers':

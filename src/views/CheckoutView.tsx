@@ -14,7 +14,10 @@ import {
   ShoppingBag,
   MapPin,
   Phone,
-  Mail
+  Mail,
+  Copy,
+  Check,
+  Link2
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useOrder } from '../context/OrderContext';
@@ -31,6 +34,7 @@ export function CheckoutView({ onNavigate, onOpenOrderTracker }: CheckoutViewPro
   const { createOrder } = useOrder();
 
   const [confirmedOrder, setConfirmedOrder] = useState<Order | null>(null);
+  const [copiedTrackingLink, setCopiedTrackingLink] = useState(false);
 
   // Form fields
   const [orderType, setOrderType] = useState<OrderType>('delivery');
@@ -186,24 +190,123 @@ export function CheckoutView({ onNavigate, onOpenOrderTracker }: CheckoutViewPro
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button
-                id="track-order-btn"
-                onClick={() => onOpenOrderTracker(confirmedOrder.orderId)}
-                className="w-full sm:w-auto px-8 py-3.5 bg-[#2D4532] hover:bg-[#233727] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors shadow-xs cursor-pointer flex items-center justify-center gap-2"
-              >
-                <Clock className="w-4 h-4" />
-                <span>Track Order Live</span>
-              </button>
+            {/* Unique Tracking Link Section */}
+            {(() => {
+              const trackingLink = `${window.location.origin}${window.location.pathname}#track-${confirmedOrder.orderId}`;
 
-              <button
-                id="back-home-btn"
-                onClick={() => onNavigate('home')}
-                className="w-full sm:w-auto px-8 py-3.5 bg-transparent border border-[#DDD5CA] hover:bg-[#F3EFE9] text-[#1A1E1B] text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors cursor-pointer"
-              >
-                Back to Home
-              </button>
-            </div>
+              const handleCopy = async () => {
+                try {
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(trackingLink);
+                  } else {
+                    throw new Error('Clipboard API unavailable');
+                  }
+                } catch {
+                  const el = document.createElement('textarea');
+                  el.value = trackingLink;
+                  el.style.position = 'fixed';
+                  el.style.opacity = '0';
+                  document.body.appendChild(el);
+                  el.select();
+                  document.execCommand('copy');
+                  document.body.removeChild(el);
+                }
+                setCopiedTrackingLink(true);
+                setTimeout(() => setCopiedTrackingLink(false), 2500);
+              };
+
+              const handleTrack = () => {
+                window.location.hash = `track-${confirmedOrder.orderId}`;
+                onOpenOrderTracker(confirmedOrder.orderId);
+              };
+
+              return (
+                <div className="space-y-4 mb-8">
+                  {/* Read-only Unique Tracking Link Display */}
+                  <div className="p-3.5 bg-[#FAF8F5] border border-[#E3DDD4] rounded-xs text-left space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="font-bold text-[#2D4532] uppercase tracking-wider flex items-center gap-1.5">
+                        <Link2 className="w-3.5 h-3.5" />
+                        Unique Order Tracking Link
+                      </span>
+                      <span className="font-mono text-[#7F8881]">
+                        Order #{confirmedOrder.orderId}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={trackingLink}
+                        className="flex-1 bg-white border border-[#DDD5CA] rounded-xs px-3 py-2 text-xs font-mono text-[#1A1E1B] select-all focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        id="copy-tracking-link-btn"
+                        onClick={handleCopy}
+                        className="px-4 py-2 bg-[#1B3B2B] hover:bg-black text-white text-xs font-semibold rounded-xs transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 shadow-2xs"
+                      >
+                        {copiedTrackingLink ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-300" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy the Tracking Link</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <p className="text-[10px] text-[#7F8881]">
+                      Share or bookmark this unique link to check live dispatch status from any device at any time.
+                    </p>
+                  </div>
+
+                  {/* Actions: Track your Order, Copy the Tracking Link, Back to Home */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      id="track-order-btn"
+                      onClick={handleTrack}
+                      className="w-full sm:w-auto px-6 py-3.5 bg-[#2D4532] hover:bg-[#233727] text-white text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors shadow-xs cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <Clock className="w-4 h-4" />
+                      <span>Track your Order</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      id="copy-tracking-action-btn"
+                      onClick={handleCopy}
+                      className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-[#F3EFE9] border border-[#2D4532] text-[#2D4532] text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      {copiedTrackingLink ? (
+                        <>
+                          <Check className="w-4 h-4 text-emerald-600" />
+                          <span>Link Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4" />
+                          <span>Copy the Tracking Link</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      id="back-home-btn"
+                      onClick={() => onNavigate('home')}
+                      className="w-full sm:w-auto px-6 py-3.5 bg-transparent border border-[#DDD5CA] hover:bg-[#F3EFE9] text-[#1A1E1B] text-xs uppercase tracking-widest font-semibold rounded-xs transition-colors cursor-pointer"
+                    >
+                      Back to Home
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       </div>

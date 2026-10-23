@@ -34,13 +34,13 @@ export const RESTAURANT_INFO: RestaurantInfo = {
 
 export const MENU_CATEGORIES: MenuCategory[] = [
   { id: 'all', name: 'All Dishes', slug: 'all' },
-  { id: 'starters', name: 'Starters & Shareables', slug: 'starters', description: 'Light bites and shared plates crafted to awaken the palate.' },
-  { id: 'mains', name: 'Signature Mains', slug: 'mains', description: 'Chef-crafted meat, poultry and seafood centerpieces.' },
-  { id: 'pasta', name: 'Handcrafted Pasta', slug: 'pasta', description: 'Freshly prepared pasta tossed with slow-simmered sauces.' },
-  { id: 'soups-salads', name: 'Soups & Salads', slug: 'soups-salads', description: 'Vibrant local and imported produce with house-made dressings.' },
-  { id: 'steaks', name: 'Prime Grills', slug: 'steaks', description: 'Carefully trimmed cuts seared over open flames.' },
-  { id: 'desserts', name: 'Artisan Desserts', slug: 'desserts', description: 'Decadent sweet creations crafted daily by our pastry team.' },
-  { id: 'beverages', name: 'Beverages & Coffee', slug: 'beverages', description: 'Handcrafted mocktails, specialty roasts and refreshing coolers.' },
+  { id: 'starters', name: 'Starters & Shareables', slug: 'starters', description: 'Light bites and shared plates crafted to awaken the palate.', addToHome: true },
+  { id: 'mains', name: 'Signature Mains', slug: 'mains', description: 'Chef-crafted meat, poultry and seafood centerpieces.', addToHome: true },
+  { id: 'pasta', name: 'Handcraft Pasta', slug: 'pasta', description: 'Freshly prepared pasta tossed with slow-simmered sauces.', addToHome: false },
+  { id: 'soups-salads', name: 'Soups & Salads', slug: 'soups-salads', description: 'Vibrant local and imported produce with house-made dressings.', addToHome: false },
+  { id: 'steaks', name: 'Prime Grills', slug: 'steaks', description: 'Carefully trimmed cuts seared over open flames.', addToHome: false },
+  { id: 'desserts', name: 'Artisan Desserts', slug: 'desserts', description: 'Decadent sweet creations crafted daily by our pastry team.', addToHome: false },
+  { id: 'beverages', name: 'Beverage & Coffee', slug: 'beverages', description: 'Handcrafted mocktails, specialty roasts and refreshing coolers.', addToHome: false },
 ];
 
 export const INITIAL_MENU_ITEMS: MenuItem[] = [

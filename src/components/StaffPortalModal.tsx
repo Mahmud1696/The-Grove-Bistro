@@ -24,6 +24,7 @@ import { OverviewTab } from './admin/OverviewTab';
 import { OrdersTab } from './admin/OrdersTab';
 import { KitchenDisplayTab } from './admin/KitchenDisplayTab';
 import { DishesMenuTab } from './admin/DishesMenuTab';
+import { CategoriesTab } from './admin/CategoriesTab';
 import { BookingsTab } from './admin/BookingsTab';
 import { CustomersTab } from './admin/CustomersTab';
 import { AnalyticsTab } from './admin/AnalyticsTab';
@@ -43,12 +44,18 @@ export function StaffPortalModal({ isOpen, onClose }: StaffPortalModalProps) {
   const { orders, updateOrderStatus } = useOrder();
   const { 
     menuItems, 
+    categories,
     addMenuItem, 
     updateMenuItem, 
     toggleDishAvailability, 
     deleteMenuItem, 
     duplicateMenuItem, 
-    resetMenuToDefault 
+    resetMenuToDefault,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    toggleCategoryAddToHome,
+    resetCategoriesToDefault
   } = useMenu();
   const { 
     reservations, 
@@ -466,6 +473,20 @@ export function StaffPortalModal({ isOpen, onClose }: StaffPortalModalProps) {
               }}
               onUpdateDish={updateMenuItem}
               onResetDefaultMenu={resetMenuToDefault}
+              onNotification={triggerNotification}
+            />
+          )}
+
+          {/* TAB: CATEGORIES */}
+          {activeTab === 'categories' && (
+            <CategoriesTab
+              categories={categories}
+              menuItems={menuItems}
+              onAddCategory={addCategory}
+              onUpdateCategory={updateCategory}
+              onDeleteCategory={deleteCategory}
+              onToggleAddToHome={toggleCategoryAddToHome}
+              onResetDefaultCategories={resetCategoriesToDefault}
               onNotification={triggerNotification}
             />
           )}

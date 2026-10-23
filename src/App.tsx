@@ -35,7 +35,18 @@ export default function App() {
   // Sync hash routing on popstate / initial load
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
+      const rawHash = window.location.hash.replace('#', '');
+      const hash = rawHash.toLowerCase();
+
+      // Check if hash is an individual order tracking link: #track-[orderId]
+      if (hash.startsWith('track-')) {
+        const orderId = rawHash.slice(6).trim();
+        if (orderId) {
+          setTrackerOrderId(orderId);
+          return;
+        }
+      }
+
       if (['home', 'menu', 'about', 'gallery', 'reservations', 'order', 'checkout', 'contact'].includes(hash)) {
         setCurrentView(hash);
       }
@@ -69,7 +80,15 @@ export default function App() {
   };
 
   const handleOpenOrderTracker = (orderId: string) => {
+    window.location.hash = `track-${orderId}`;
     setTrackerOrderId(orderId);
+  };
+
+  const handleCloseOrderTracker = () => {
+    setTrackerOrderId(null);
+    if (window.location.hash.startsWith('#track-')) {
+      window.location.hash = currentView;
+    }
   };
 
   return (
@@ -148,7 +167,7 @@ export default function App() {
             <OrderTrackerModal
               orderId={trackerOrderId}
               isOpen={Boolean(trackerOrderId)}
-              onClose={() => setTrackerOrderId(null)}
+              onClose={handleCloseOrderTracker}
             />
           </div>
         </ReservationProvider>

@@ -18,7 +18,7 @@ import {
   ChefHat
 } from 'lucide-react';
 import { MenuItem } from '../../types';
-import { MENU_CATEGORIES } from '../../data/restaurantData';
+import { useMenu } from '../../context/MenuContext';
 import { EditDishModal } from './EditDishModal';
 
 interface DishesMenuTabProps {
@@ -42,10 +42,16 @@ export function DishesMenuTab({
   onResetDefaultMenu,
   onNotification
 }: DishesMenuTabProps) {
+  const { categories } = useMenu();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'in_stock' | 'out_of_stock' | 'featured'>('all');
   
+  const allCategories = useMemo(() => [
+    { id: 'all', name: 'All Dishes', slug: 'all' },
+    ...categories
+  ], [categories]);
+
   const [editingDish, setEditingDish] = useState<MenuItem | null>(null);
   const [deleteConfirmDish, setDeleteConfirmDish] = useState<MenuItem | null>(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -132,7 +138,7 @@ export function DishesMenuTab({
               onChange={e => setSelectedCategory(e.target.value)}
               className="px-2.5 py-1.5 bg-white border border-stone-200 rounded-sm text-xs text-stone-700 focus:outline-none focus:border-stone-900 cursor-pointer"
             >
-              {MENU_CATEGORIES.map(cat => (
+              {allCategories.map(cat => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
@@ -148,7 +154,7 @@ export function DishesMenuTab({
               <option value="all">All Availability</option>
               <option value="in_stock">In Stock Only</option>
               <option value="out_of_stock">Out of Stock</option>
-              <option value="featured">Featured Only</option>
+              <option value="featured">On Home (Add to Home)</option>
             </select>
 
             {/* Add Dish Primary Action */}
@@ -175,7 +181,7 @@ export function DishesMenuTab({
 
         {/* Category Pills / Segmented Filters */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none pt-1 border-t border-stone-100">
-          {MENU_CATEGORIES.map(cat => {
+          {allCategories.map(cat => {
             const count = cat.id === 'all' 
               ? menuItems.length 
               : menuItems.filter(m => m.category === cat.id).length;
@@ -233,7 +239,7 @@ export function DishesMenuTab({
                   {dish.featured && (
                     <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-[#1B3B2B] text-white rounded-xs shadow-xs flex items-center gap-1">
                       <Star className="w-2.5 h-2.5 fill-current" />
-                      <span>Featured</span>
+                      <span>On Home</span>
                     </span>
                   )}
                 </div>

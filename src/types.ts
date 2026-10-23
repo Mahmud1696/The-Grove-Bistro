@@ -25,6 +25,7 @@ export interface MenuCategory {
   name: string;
   slug: string;
   description?: string;
+  addToHome?: boolean;
 }
 
 export interface CartItem {
@@ -87,6 +88,7 @@ export type PortalTab =
   | 'orders' 
   | 'kitchen' 
   | 'dishes' 
+  | 'categories'
   | 'bookings' 
   | 'customers' 
   | 'analytics' 

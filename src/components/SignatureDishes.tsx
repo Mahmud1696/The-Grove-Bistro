@@ -12,7 +12,7 @@ export function SignatureDishes({ dishes, onNavigate }: SignatureDishesProps) {
   const { addItem } = useCart();
   const [addedDishId, setAddedDishId] = useState<string | null>(null);
 
-  const featured = dishes.filter(d => d.featured).slice(0, 6);
+  const featured = dishes.filter(d => d.featured);
 
   const handleAdd = (dish: MenuItem) => {
     addItem(dish, 1);

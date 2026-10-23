@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Check, Image as ImageIcon, Upload, Trash2, AlertCircle } from 'lucide-react';
 import { MenuItem } from '../../types';
-import { MENU_CATEGORIES } from '../../data/restaurantData';
+import { useMenu } from '../../context/MenuContext';
 import { processDishImageFile, ProcessedImageResult } from '../../utils/imageUtils';
 
 interface EditDishModalProps {
@@ -12,6 +12,7 @@ interface EditDishModalProps {
 }
 
 export function EditDishModal({ isOpen, dish, onClose, onSaveDish }: EditDishModalProps) {
+  const { categories } = useMenu();
   const [name, setName] = useState('');
   const [category, setCategory] = useState('mains');
   const [price, setPrice] = useState<number | ''>('');
@@ -156,7 +157,7 @@ export function EditDishModal({ isOpen, dish, onClose, onSaveDish }: EditDishMod
                 onChange={e => setCategory(e.target.value)}
                 className="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-sm text-xs text-stone-900 focus:outline-none focus:bg-white focus:border-stone-900 cursor-pointer"
               >
-                {MENU_CATEGORIES.filter(c => c.id !== 'all').map(cat => (
+                {categories.map(cat => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
                   </option>
@@ -299,9 +300,9 @@ export function EditDishModal({ isOpen, dish, onClose, onSaveDish }: EditDishMod
                 type="checkbox"
                 checked={featured}
                 onChange={e => setFeatured(e.target.checked)}
-                className="w-4 h-4 text-purple-800 rounded-xs focus:ring-purple-700"
+                className="w-4 h-4 text-emerald-800 rounded-xs focus:ring-emerald-700"
               />
-              <span>Featured on Homepage</span>
+              <span className="font-semibold text-emerald-950">Add to Home</span>
             </label>
           </div>
 

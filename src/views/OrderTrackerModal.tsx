@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { X, Clock, CheckCircle, ChefHat, Truck, ShoppingBag, Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Clock, CheckCircle, ChefHat, Truck, ShoppingBag, Search, Copy, Check, Link2 } from 'lucide-react';
 import { useOrder } from '../context/OrderContext';
 import { OrderStatus } from '../types';
 
@@ -12,10 +12,48 @@ interface OrderTrackerModalProps {
 export function OrderTrackerModal({ orderId, isOpen, onClose }: OrderTrackerModalProps) {
   const { orders, getOrderById } = useOrder();
   const [searchId, setSearchId] = useState('');
+  const [activeSearchId, setActiveSearchId] = useState<string | null>(null);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   if (!isOpen) return null;
 
-  const currentOrder = (orderId ? getOrderById(orderId) : null) || orders[0];
+  // Resolve target order: specific searched/prop ID first, otherwise latest order
+  const targetId = activeSearchId || orderId;
+  const currentOrder = targetId ? getOrderById(targetId) : (orders.length > 0 ? orders[0] : null);
+
+  const trackingUrl = currentOrder 
+    ? `${window.location.origin}${window.location.pathname}#track-${currentOrder.orderId}`
+    : '';
+
+  const handleCopyLink = async () => {
+    if (!trackingUrl) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(trackingUrl);
+      } else {
+        throw new Error('Clipboard fallback');
+      }
+    } catch {
+      const el = document.createElement('textarea');
+      el.value = trackingUrl;
+      el.style.position = 'fixed';
+      el.style.opacity = '0';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2200);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchId.trim()) {
+      setActiveSearchId(searchId.trim());
+      window.location.hash = `track-${searchId.trim()}`;
+    }
+  };
 
   const steps: { status: OrderStatus; label: string; icon: any }[] = [
     { status: 'Confirmed', label: 'Order Confirmed', icon: CheckCircle },
@@ -79,30 +117,105 @@ export function OrderTrackerModal({ orderId, isOpen, onClose }: OrderTrackerModa
         {/* Content */}
         <div className="p-6 space-y-6">
           {!currentOrder ? (
-            <div className="text-center py-10">
-              <p className="text-sm text-[#666F67]">No recent order found.</p>
+            <div className="text-center py-10 space-y-4">
+              <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mx-auto text-stone-400">
+                <Search className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#1A1E1B]">Order {targetId ? `"${targetId}"` : ''} not found</p>
+                <p className="text-xs text-[#666F67] mt-1">
+                  Please check the reference number or look up with your order code below.
+                </p>
+              </div>
+
+              <form onSubmit={handleSearchSubmit} className="max-w-xs mx-auto flex gap-2">
+                <input
+                  type="text"
+                  value={searchId}
+                  onChange={e => setSearchId(e.target.value)}
+                  placeholder="e.g. GV-8419"
+                  className="flex-1 px-3 py-2 text-xs bg-white border border-[#DDD5CA] rounded-xs font-mono uppercase focus:outline-none focus:border-[#1B241D]"
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#1B241D] text-white text-xs font-semibold rounded-xs hover:bg-black transition-colors"
+                >
+                  Track
+                </button>
+              </form>
+
+              {orders.length > 0 && (
+                <div className="pt-2">
+                  <p className="text-xs text-stone-500 mb-2">Recent available orders:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {orders.slice(0, 3).map(o => (
+                      <button
+                        key={o.orderId}
+                        type="button"
+                        onClick={() => {
+                          setActiveSearchId(o.orderId);
+                          window.location.hash = `track-${o.orderId}`;
+                        }}
+                        className="text-xs font-mono px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xs border border-stone-200 transition-colors"
+                      >
+                        {o.orderId} ({o.customerName})
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <>
-              {/* Order Reference Card */}
-              <div className="p-4 bg-white border border-[#E3DDD4] rounded-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div>
-                  <div className="text-xs text-[#7F8881] uppercase tracking-wider">
-                    Order Reference
+              {/* Order Reference & Tracking Link Header */}
+              <div className="p-4 bg-white border border-[#E3DDD4] rounded-xs space-y-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div>
+                    <div className="text-xs text-[#7F8881] uppercase tracking-wider">
+                      Order Reference
+                    </div>
+                    <div className="font-serif-display text-2xl font-bold text-[#1A1E1B]">
+                      {currentOrder.orderId}
+                    </div>
+                    <p className="text-xs text-[#555E57] mt-0.5">
+                      Ordered for {currentOrder.customerName} • {currentOrder.orderType.toUpperCase()}
+                    </p>
                   </div>
-                  <div className="font-serif-display text-2xl font-bold text-[#1A1E1B]">
-                    {currentOrder.orderId}
+
+                  <div className="sm:text-right">
+                    <div className="text-xs text-[#7F8881] uppercase tracking-wider">Current Status</div>
+                    <span className="inline-block px-3 py-1 bg-[#2D4532] text-white text-xs font-semibold rounded-full mt-0.5">
+                      {currentOrder.orderStatus}
+                    </span>
                   </div>
-                  <p className="text-xs text-[#555E57] mt-0.5">
-                    Ordered for {currentOrder.customerName} • {currentOrder.orderType.toUpperCase()}
-                  </p>
                 </div>
 
-                <div className="sm:text-right">
-                  <div className="text-xs text-[#7F8881] uppercase tracking-wider">Current Status</div>
-                  <span className="inline-block px-3 py-1 bg-[#2D4532] text-white text-xs font-semibold rounded-full mt-0.5">
-                    {currentOrder.orderStatus}
-                  </span>
+                {/* Tracking Link Bar */}
+                <div className="pt-2 border-t border-[#F0EBE3] flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 text-xs text-stone-600 truncate min-w-0">
+                    <Link2 className="w-3.5 h-3.5 text-[#2D4532] shrink-0" />
+                    <span className="font-mono text-[11px] truncate text-stone-700 select-all">
+                      {trackingUrl}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-stone-200 border border-stone-300 rounded-xs text-[11px] font-semibold text-stone-800 transition-colors cursor-pointer"
+                    title="Copy unique tracking link"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <Check className="w-3 h-3 text-emerald-600" />
+                        <span className="text-emerald-700">Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Copy Link</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
 

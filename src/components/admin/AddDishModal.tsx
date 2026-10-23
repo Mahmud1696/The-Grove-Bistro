@@ -15,7 +15,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { MenuItem } from '../../types';
-import { MENU_CATEGORIES } from '../../data/restaurantData';
+import { useMenu } from '../../context/MenuContext';
 import { processDishImageFile, SAMPLE_DISH_PHOTOS, ProcessedImageResult } from '../../utils/imageUtils';
 
 interface AddDishModalProps {
@@ -174,7 +174,8 @@ export function AddDishModal({ isOpen, onClose, onAddDish }: AddDishModalProps) 
     onClose();
   };
 
-  const selectableCategories = MENU_CATEGORIES.filter(c => c.id !== 'all');
+  const { categories } = useMenu();
+  const selectableCategories = categories;
   const currentCategoryObj = selectableCategories.find(c => c.id === category);
 
   return (
@@ -518,7 +519,7 @@ export function AddDishModal({ isOpen, onClose, onAddDish }: AddDishModalProps) 
                   onChange={e => setFeatured(e.target.checked)}
                   className="accent-[#1B3B2B] w-4 h-4 cursor-pointer"
                 />
-                <span>Feature on Home</span>
+                <span className="font-semibold text-emerald-950">Add to Home</span>
               </label>
             </div>
           </div>
@@ -613,7 +614,7 @@ export function AddDishModal({ isOpen, onClose, onAddDish }: AddDishModalProps) 
                       <span className="text-red-700 font-semibold">• 🌶️ Spicy</span>
                     )}
                     {featured && (
-                      <span className="text-purple-700 font-semibold">• ✨ Featured on Home</span>
+                      <span className="text-emerald-800 font-semibold">• ✨ Add to Home</span>
                     )}
                   </div>
 
